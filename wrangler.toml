@@ -1,0 +1,15 @@
+# wrangler.toml
+name = "tanstarter"
+pages_build_output_dir = "./dist"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2024-11-13"
+
+[vars]
+VITE_BASE_URL = "https://tanstarter.flybullet.net"
+VITE_APP_NAME = "Tanstarter"
+VITE_ALLOW_SIGNUP = "true"
+VITE_ALLOW_PASSWORD_AUTH = "true"
+VITE_ALLOW_GITHUB_AUTH = "true"
+VITE_ALLOW_GOOGLE_AUTH = "true"
+
+# other vars encrypted

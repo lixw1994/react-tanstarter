@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
+    "dev": "cp .env.dev .env && vinxi dev",
+    "build": " cp .env.production .env && vinxi build",
     "start": "vinxi start",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -12,7 +12,8 @@
     "deps": "pnpm dlx npm-check-updates@latest --interactive --format group",
     "ui": "pnpm dlx shadcn@latest",
     "auth": "pnpm dlx @better-auth/cli@latest",
-    "auth:generate": "pnpm dlx @better-auth/cli@latest generate --y --output ./src/lib/server/schema/auth.schema.ts && prettier --write ./src/lib/server/schema/auth.schema.ts"
+    "auth:generate": "pnpm dlx @better-auth/cli@latest generate --y --output ./src/lib/server/schema/auth.schema.ts && prettier --write ./src/lib/server/schema/auth.schema.ts",
+    "deploy:cloudflare": "pnpm build && npx wrangler --cwd dist/ pages deploy"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.6",
@@ -33,6 +34,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.2.0",
+    "unenv": "^1.10.0",
     "vinxi": "0.5.3"
   },
   "devDependencies": {

@@ -19,15 +19,15 @@ An enhanced template based on 🏝️ TanStack Start, with authentication contro
 1. Clone this repository using gitpick (recommended):
 
    ```bash
-   npx gitpick lixw1994/react-tanstarter myapp
+   npx gitpick lixw1994/react-tanstarter myapp -b deploy/cloudflare
    cd myapp
    ```
 
    Or clone directly:
 
    ```bash
-   git clone https://github.com/lixw1994/react-tanstarter.git
-   cd react-tanstarter
+   git clone https://github.com/lixw1994/react-tanstarter.git myapp --depth 1 --branch deploy/cloudflare
+   cd react-tanstarter && rm -rf .git
    ```
 
 2. Install dependencies:
@@ -39,7 +39,7 @@ An enhanced template based on 🏝️ TanStack Start, with authentication contro
 3. Create a `.env` file based on [`.env.example`](./.env.example) and configure the following environment variables:
 
    ```bash
-   cp .env.example .env
+   cp .env.example .env.dev
    ```
 
    ```
@@ -90,6 +90,14 @@ With the **VITE_APP_NAME** environment variable, you can easily change the name 
 - Page metadata description
 - Login and registration pages
 
+### Cloudflare Pages Deployment
+
+This template is configured to work with Cloudflare Pages. You can deploy it directly to Cloudflare Pages by following the instructions in the [TanStack Start documentation](https://tanstack.com/start/latest/docs/framework/react/hosting#cloudflare-pages).
+
+#### Cloudflare Pages Variables
+
+Copy `.env ` plain variables to `wrangler.toml.vars` and add encrypted variables to cloudflare pages secrets using `npx wrangler pages secret put <KEY>`.
+
 ## Useful Tools
 
 #### Scripts
@@ -101,6 +109,7 @@ These scripts in [package.json](./package.json#L5) use **pnpm** by default, but 
 - **`ui`** - shadcn/ui CLI (e.g., `pnpm ui add button` to add a button component).
 - **`format`** and **`lint`** - Run Prettier and ESLint.
 - **`deps`** - Selectively upgrade dependencies using npm-check-updates.
+- **`deploy:cloudflare`** - Deploy to Cloudflare Pages.
 
 #### Utility Components
 
