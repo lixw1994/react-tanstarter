@@ -65,14 +65,6 @@ function Home() {
 
       <div className="flex flex-col items-center gap-2">
         <ThemeToggle />
-        <a
-          className="text-muted-foreground hover:text-foreground underline"
-          href="https://github.com/dotnize/react-tanstarter"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          dotnize/react-tanstarter
-        </a>
       </div>
     </div>
   );

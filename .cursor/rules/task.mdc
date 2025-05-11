@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Please carefully think about and design according to the above requirements, create a design document and checklist in the `tasks` directory, and execute step by step. After completing each small step, update the checklist status.

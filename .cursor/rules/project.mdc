@@ -1,0 +1,9 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+1. This is a full-stack project with a tech stack of tanstack start + react + shadcn + drizzle orm with postgres.
+2. If you need to add a UI, execute `pnpm ui add <ui-name>` to add shadcn ui.
+3. Package management uses `pnpm`.
+4. The code must adhere to the KISS principle; avoid over-designing and over-optimizing.

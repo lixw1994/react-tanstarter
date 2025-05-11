@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Think and analyze 5-7 possible sources of the problem, summarize them into 1-2 most likely causes, then add logs to verify your assumptions before we start the actual code fixes.

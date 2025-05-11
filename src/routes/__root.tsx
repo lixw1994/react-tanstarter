@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { auth } from "~/lib/server/auth";
+import { APP_CONFIG } from "~/lib/auth-client";
 import appCss from "~/lib/styles/app.css?url";
 
 const getUser = createServerFn({ method: "GET" }).handler(async () => {
@@ -43,11 +44,11 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "React TanStarter",
+        title: APP_CONFIG.APP_NAME,
       },
       {
         name: "description",
-        content: "A minimal starter template for 🏝️ TanStack Start.",
+        content: `Welcome to ${APP_CONFIG.APP_NAME} - A minimal starter template for 🏝️ TanStack Start.`,
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
