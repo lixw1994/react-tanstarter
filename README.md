@@ -39,7 +39,8 @@ An enhanced template based on 🏝️ TanStack Start, with authentication contro
 3. Create a `.env` file based on [`.env.example`](./.env.example) and configure the following environment variables:
 
    ```bash
-   cp .env.example .env
+   cp .env.example .env.dev
+   cp .env.example .env.production
    ```
 
    ```
@@ -101,20 +102,3 @@ These scripts in [package.json](./package.json#L5) use **pnpm** by default, but 
 - **`ui`** - shadcn/ui CLI (e.g., `pnpm ui add button` to add a button component).
 - **`format`** and **`lint`** - Run Prettier and ESLint.
 - **`deps`** - Selectively upgrade dependencies using npm-check-updates.
-
-#### Utility Components
-
-- [`auth-guard.ts`](./src/lib/middleware/auth-guard.ts) - An example middleware for enforcing authentication on server functions.
-- [`ThemeToggle.tsx`](./src/components/ThemeToggle.tsx) - A simple component for toggling between light and dark modes.
-
-## Production Build
-
-Read the [hosting documentation](https://tanstack.com/start/latest/docs/framework/react/hosting) to learn how to deploy your TanStack Start application.
-
-## Contributing
-
-Pull Requests and Issues are welcome! If you have any questions or suggestions, feel free to raise them.
-
-## License
-
-MIT

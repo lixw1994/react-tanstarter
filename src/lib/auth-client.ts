@@ -6,7 +6,7 @@ const toBool = (value: string | undefined): boolean =>
 
 // Application configuration
 export const APP_CONFIG = {
-  APP_NAME: import.meta.env.VITE_APP_NAME || 'Tanstarter',
+  APP_NAME: import.meta.env.VITE_APP_NAME || 'Tanstarter Default',
 };
 
 // Authentication feature flags

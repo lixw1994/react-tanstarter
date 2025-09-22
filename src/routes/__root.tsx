@@ -12,9 +12,12 @@ import { getWebRequest } from "@tanstack/react-start/server";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-import { auth } from "~/lib/server/auth";
 import { APP_CONFIG } from "~/lib/auth-client";
+import { auth } from "~/lib/server/auth";
 import appCss from "~/lib/styles/app.css?url";
+
+import Layout from "~/components/layout/Layout";
+import { Toaster } from "~/components/ui/sonner";
 
 const getUser = createServerFn({ method: "GET" }).handler(async () => {
   const { headers } = getWebRequest()!;
@@ -48,7 +51,7 @@ export const Route = createRootRouteWithContext<{
       },
       {
         name: "description",
-        content: `Welcome to ${APP_CONFIG.APP_NAME} - A minimal starter template for 🏝️ TanStack Start.`,
+        content: `Welcome to ${APP_CONFIG.APP_NAME}`,
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -59,7 +62,10 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   return (
     <RootDocument>
-      <Outlet />
+      <Layout>
+        <Outlet />
+        <Toaster />
+      </Layout>
     </RootDocument>
   );
 }
@@ -75,7 +81,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         <ScriptOnce>
           {`document.documentElement.classList.toggle(
             'dark',
-            localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            localStorage.theme === 'dark'
             )`}
         </ScriptOnce>
 

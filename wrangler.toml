@@ -1,0 +1,37 @@
+"$schema" = "node_modules/wrangler/config-schema.json"
+name = "tanstarter"
+main = "./.output/server/index.mjs"
+compatibility_date = "2025-04-14"
+compatibility_flags = [ "nodejs_compat" ]
+
+[observability]
+enabled = true
+
+[assets]
+directory = "./.output/public/"
+
+[vars]
+VITE_BASE_URL = "https://tanstarter.flybullet.net"
+VITE_APP_NAME = "Tanstarter"
+VITE_ALLOW_SIGNUP = "false"
+VITE_ALLOW_PASSWORD_AUTH = "true"
+VITE_ALLOW_GITHUB_AUTH = "false"
+VITE_ALLOW_GOOGLE_AUTH = "true"
+VITE_ALLOW_FEISHU_AUTH = "true"
+ADMIN_EMAILS = "lixianwei@example.com,lixianwei1994@gmail.com"
+BETTER_AUTH_URL = "https://tanstarter.flybullet.net"
+
+# other vars encrypted via `wrangler secret put <KEY_NAME>`
+# vars not show in .env.example
+# DATABASE_URL
+# BETTER_AUTH_SECRET
+# GITHUB_CLIENT_ID
+# GITHUB_CLIENT_SECRET
+# GOOGLE_CLIENT_ID
+# GOOGLE_CLIENT_SECRET
+# FEISHU_CLIENT_ID
+# FEISHU_CLIENT_SECRET
+
+# [[r2_buckets]]
+# binding = 'R2'
+# bucket_name = 'app-cloud-storage'
