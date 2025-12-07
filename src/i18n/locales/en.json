@@ -1,0 +1,126 @@
+{
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "or": "Or",
+    "unknown": "Unknown"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "pageA": "Page A",
+    "pageB": "Page B",
+    "settings": "Settings",
+    "userManagement": "User Management",
+    "profile": "Profile"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Welcome back, here is your workspace",
+    "todo": "To Do",
+    "inProgress": "In Progress",
+    "completed": "Completed"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your app preferences",
+    "theme": "Theme",
+    "selectTheme": "Select theme mode",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "languageDescription": "Select your preferred language",
+    "notifications": "Notifications",
+    "notificationsComingSoon": "Notification settings coming soon..."
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Manage your account information and usage statistics",
+    "accountInfo": "Account Information",
+    "basicAccountInfo": "Your basic account information",
+    "emailAddress": "Email Address",
+    "username": "Username",
+    "registrationTime": "Registration Time"
+  },
+  "userManagement": {
+    "title": "User Management",
+    "description": "Manage system users and permissions",
+    "userList": "User List",
+    "username": "Username",
+    "email": "Email",
+    "emailVerification": "Email Verification",
+    "registrationTime": "Registration Time",
+    "actions": "Actions",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "noUsers": "No user data",
+    "confirmDelete": "Are you sure you want to delete user \"{{name}}\"? This action cannot be undone."
+  },
+  "sidebar": {
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "settings": "Settings",
+    "admin": "Admin"
+  },
+  "auth": {
+    "connectTo": "Connect to {{appName}}",
+    "getStarted": "Get started",
+    "signInToContinue": "Sign in to your account to continue",
+    "loggingIn": "Logging in...",
+    "signingUp": "Signing up...",
+    "signingIn": "Signing in...",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "enterPasswordHere": "Enter password here"
+  },
+  "landing": {
+    "openSource": "Open Source",
+    "buildYourNext": "Build your next",
+    "aiApplication": "AI application",
+    "subtitle": "A production-ready full-stack template with authentication, database, and deployment configured. Start building in minutes.",
+    "features": {
+      "tanstack": "TanStack Router & Query for state management",
+      "auth": "Better Auth with GitHub, Google, Feishu OAuth",
+      "drizzle": "Drizzle ORM with Cloudflare D1 database",
+      "tailwind": "Tailwind CSS v4 with modern design tokens",
+      "typescript": "TypeScript throughout the entire stack",
+      "cloudflare": "One-click deploy to Cloudflare Pages"
+    },
+    "viewOnGithub": "View on GitHub",
+    "footer": "Built with React, TanStack & Better Auth"
+  },
+  "pages": {
+    "pageA": {
+      "description": "This is an example page",
+      "cardTitle": "Example Card",
+      "cardDescription": "Add your page content here",
+      "cardContent": "This page can be used to display data tables, lists, or other business content."
+    },
+    "pageB": {
+      "description": "This is another example page",
+      "cardTitle": "Example Card",
+      "cardDescription": "Add your page content here",
+      "cardContent": "This page can be used to display charts, statistics, or other visualizations."
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "We are building the future.",
+    "backHome": "Back Home"
+  },
+  "errors": {
+    "notFound": "The page you are looking for does not exist.",
+    "tryAgain": "Try Again",
+    "goBack": "Go Back",
+    "home": "Home"
+  }
+}

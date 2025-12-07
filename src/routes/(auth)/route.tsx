@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { AUTH_CONFIG } from "~/lib/auth-client";
+import { AuthLayout } from "~/components/layout/auth/AuthLayout";
+import { clientEnv } from "~/config/client-env";
 
 export const Route = createFileRoute("/(auth)")({
   component: RouteComponent,
@@ -14,7 +15,7 @@ export const Route = createFileRoute("/(auth)")({
     }
 
     // If it's signup page but signup is not allowed, redirect to login page
-    if (location.pathname === "/signup" && !AUTH_CONFIG.ALLOW_SIGNUP) {
+    if (location.pathname === "/signup" && !clientEnv.VITE_ALLOW_SIGNUP) {
       throw redirect({
         to: "/login",
       });
@@ -28,10 +29,8 @@ export const Route = createFileRoute("/(auth)")({
 
 function RouteComponent() {
   return (
-    <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <Outlet />
-      </div>
-    </div>
+    <AuthLayout>
+      <Outlet />
+    </AuthLayout>
   );
 }

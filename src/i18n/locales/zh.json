@@ -1,0 +1,126 @@
+{
+  "common": {
+    "login": "登录",
+    "logout": "退出登录",
+    "signup": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "name": "姓名",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "loading": "加载中...",
+    "or": "或",
+    "unknown": "未知"
+  },
+  "nav": {
+    "dashboard": "工作台",
+    "pageA": "页面 A",
+    "pageB": "页面 B",
+    "settings": "偏好设置",
+    "userManagement": "用户管理",
+    "profile": "个人资料"
+  },
+  "dashboard": {
+    "title": "工作台",
+    "description": "欢迎回来，这里是你的工作台",
+    "todo": "待办事项",
+    "inProgress": "进行中",
+    "completed": "已完成"
+  },
+  "settings": {
+    "title": "偏好设置",
+    "description": "管理你的应用偏好",
+    "theme": "主题",
+    "selectTheme": "选择主题模式",
+    "light": "亮色",
+    "dark": "暗色",
+    "language": "语言",
+    "languageDescription": "选择你喜欢的语言",
+    "notifications": "通知",
+    "notificationsComingSoon": "通知设置即将推出..."
+  },
+  "profile": {
+    "title": "个人资料",
+    "description": "管理您的账户信息和使用统计",
+    "accountInfo": "账户信息",
+    "basicAccountInfo": "您的基本账户信息",
+    "emailAddress": "邮箱地址",
+    "username": "用户名",
+    "registrationTime": "注册时间"
+  },
+  "userManagement": {
+    "title": "用户管理",
+    "description": "管理系统用户和权限",
+    "userList": "用户列表",
+    "username": "用户名",
+    "email": "邮箱",
+    "emailVerification": "邮箱验证",
+    "registrationTime": "注册时间",
+    "actions": "操作",
+    "verified": "已验证",
+    "unverified": "未验证",
+    "noUsers": "暂无用户数据",
+    "confirmDelete": "确定要删除用户 \"{{name}}\" 吗？此操作不可撤销。"
+  },
+  "sidebar": {
+    "darkMode": "暗色模式",
+    "lightMode": "亮色模式",
+    "settings": "设置",
+    "admin": "管理"
+  },
+  "auth": {
+    "connectTo": "连接到 {{appName}}",
+    "getStarted": "开始使用",
+    "signInToContinue": "登录您的账户以继续",
+    "loggingIn": "登录中...",
+    "signingUp": "注册中...",
+    "signingIn": "登录中...",
+    "dontHaveAccount": "还没有账户？",
+    "alreadyHaveAccount": "已有账户？",
+    "passwordsDoNotMatch": "密码不匹配",
+    "enterPasswordHere": "在此输入密码"
+  },
+  "landing": {
+    "openSource": "开源项目",
+    "buildYourNext": "构建你的下一个",
+    "aiApplication": "AI 应用",
+    "subtitle": "一个生产就绪的全栈模板，已配置身份验证、数据库和部署。几分钟内开始构建。",
+    "features": {
+      "tanstack": "TanStack Router & Query 状态管理",
+      "auth": "Better Auth 支持 GitHub、Google、飞书 OAuth",
+      "drizzle": "Drizzle ORM 配合 Cloudflare D1 数据库",
+      "tailwind": "Tailwind CSS v4 现代设计令牌",
+      "typescript": "全栈 TypeScript 支持",
+      "cloudflare": "一键部署到 Cloudflare Pages"
+    },
+    "viewOnGithub": "在 GitHub 查看",
+    "footer": "使用 React、TanStack 和 Better Auth 构建"
+  },
+  "pages": {
+    "pageA": {
+      "description": "这是一个示例页面",
+      "cardTitle": "示例卡片",
+      "cardDescription": "在这里添加你的页面内容",
+      "cardContent": "这个页面可以用来展示数据表格、列表或其他业务内容。"
+    },
+    "pageB": {
+      "description": "这是另一个示例页面",
+      "cardTitle": "示例卡片",
+      "cardDescription": "在这里添加你的页面内容",
+      "cardContent": "这个页面可以用来展示图表、统计数据或其他可视化内容。"
+    }
+  },
+  "about": {
+    "title": "关于我们",
+    "subtitle": "我们正在构建未来。",
+    "backHome": "返回首页"
+  },
+  "errors": {
+    "notFound": "您查找的页面不存在。",
+    "tryAgain": "重试",
+    "goBack": "返回上一页",
+    "home": "首页"
+  }
+}

@@ -1,14 +1,11 @@
 "$schema" = "node_modules/wrangler/config-schema.json"
 name = "tanstarter"
-main = "./.output/server/index.mjs"
-compatibility_date = "2025-04-14"
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2025-09-02"
+compatibility_flags = ["nodejs_compat"]
+main = "./src/server-entry.ts"
 
 [observability]
 enabled = true
-
-[assets]
-directory = "./.output/public/"
 
 [vars]
 VITE_BASE_URL = "https://tanstarter.flybullet.net"
@@ -35,3 +32,9 @@ BETTER_AUTH_URL = "https://tanstarter.flybullet.net"
 # [[r2_buckets]]
 # binding = 'R2'
 # bucket_name = 'app-cloud-storage'
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tanstarter-db"
+database_id = "810cbd35-4afa-4ac2-a28d-72c8b448b1a8"
+migrations_dir = "drizzle"

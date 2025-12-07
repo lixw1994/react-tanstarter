@@ -1,104 +1,100 @@
-# [React TanStarter](https://github.com/lixw1994/react-tanstarter)
+# React TanStarter
 
-An enhanced template based on 🏝️ TanStack Start, with authentication control switches and configurable application name.
+[English](./README.md) | [中文](./README.zh-CN.md)
 
-![Version](https://img.shields.io/badge/Version-1.0.0-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
+A production-ready full-stack React template with authentication, database, and i18n configured. Deploy to Cloudflare in one click.
+
 ![React](https://img.shields.io/badge/React-19-61DAFB)
 ![TanStack](https://img.shields.io/badge/TanStack-latest-FF4154)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-Pages-F38020)
 
-- [React 19](https://react.dev) + [React Compiler](https://react.dev/learn/react-compiler)
-- TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest)
-- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- [Drizzle ORM](https://orm.drizzle.team/) + PostgreSQL
-- [Better Auth](https://www.better-auth.com/) with configurable authentication control switches
-- Configurable application name
+## ✨ Features
 
-## Getting Started
+- **React 19** with TanStack [Start](https://tanstack.com/start/latest) + [Router](https://tanstack.com/router/latest) + [Query](https://tanstack.com/query/latest)
+- **Tailwind CSS v4** + [shadcn/ui](https://ui.shadcn.com/)
+- **Drizzle ORM** + Cloudflare D1 (SQLite)
+- **Better Auth** with GitHub, Google, Feishu OAuth
+- **i18n** built-in (English & Chinese)
+- **One-click deploy** to Cloudflare Pages
 
-1. Clone this repository using gitpick (recommended):
+## 🚀 Quick Start
 
-   ```bash
-   npx gitpick lixw1994/react-tanstarter myapp
-   cd myapp
-   ```
+```bash
+# Clone
+npx gitpick lixw1994/react-tanstarter myapp
+cd myapp
 
-   Or clone directly:
+# Install
+pnpm install
 
-   ```bash
-   git clone https://github.com/lixw1994/react-tanstarter.git
-   cd react-tanstarter
-   ```
+# Setup environment
+cp .env .env.local
+# Edit .env.local with your secrets
 
-2. Install dependencies:
+# Push database schema
+pnpm db:push
 
-   ```bash
-   pnpm install
-   ```
+# Start development
+pnpm dev
+```
 
-3. Create a `.env` file based on [`.env.example`](./.env.example) and configure the following environment variables:
+Visit [http://localhost:5173](http://localhost:5173)
 
-   ```bash
-   cp .env.example .env.dev
-   cp .env.example .env.production
-   ```
+## ⚙️ Configuration
 
-   ```
-   # Application name
-   VITE_APP_NAME=Your App Name
+### Environment Variables
 
-   # Authentication control switches
-   VITE_ALLOW_SIGNUP=true
-   VITE_ALLOW_PASSWORD_AUTH=true
-   VITE_ALLOW_GITHUB_AUTH=true
-   VITE_ALLOW_GOOGLE_AUTH=true
-   ```
+| Variable                   | Description                              |
+| -------------------------- | ---------------------------------------- |
+| `VITE_APP_NAME`            | Application name                         |
+| `VITE_BASE_URL`            | Base URL (e.g., `http://localhost:5173`) |
+| `VITE_ALLOW_SIGNUP`        | Enable user registration                 |
+| `VITE_ALLOW_PASSWORD_AUTH` | Enable email/password login              |
+| `VITE_ALLOW_GITHUB_AUTH`   | Enable GitHub OAuth                      |
+| `VITE_ALLOW_GOOGLE_AUTH`   | Enable Google OAuth                      |
+| `VITE_ALLOW_FEISHU_AUTH`   | Enable Feishu OAuth                      |
+| `ADMIN_EMAILS`             | Comma-separated admin emails             |
+| `BETTER_AUTH_SECRET`       | Auth secret (min 32 chars)               |
 
-4. Use drizzle-kit to push the database schema to your database:
+### Language Switching
 
-   ```bash
-   pnpm db push
-   ```
+Go to **Settings → Language** to switch between English and 简体中文.
 
-   For more information, refer to: https://orm.drizzle.team/docs/migrations
+## 📦 Scripts
 
-5. Run the development server:
+| Command               | Description                |
+| --------------------- | -------------------------- |
+| `pnpm dev`            | Start development server   |
+| `pnpm build`          | Build for production       |
+| `pnpm db:push`        | Push schema to local D1    |
+| `pnpm db:push:remote` | Push schema to remote D1   |
+| `pnpm cf:deploy`      | Deploy to Cloudflare Pages |
+| `pnpm ui`             | Add shadcn/ui components   |
+| `pnpm auth:generate`  | Regenerate auth schema     |
 
-   ```bash
-   pnpm dev
-   ```
+## 📁 Project Structure
 
-   The development server should now be running at [http://localhost:3000](http://localhost:3000).
+```
+src/
+├── components/        # UI components
+│   ├── auth/          # Auth-related components
+│   ├── layout/        # Layout components
+│   └── ui/            # shadcn/ui components
+├── config/            # Environment & navigation config
+├── i18n/              # Internationalization
+│   └── locales/       # Translation files (en.json, zh.json)
+├── lib/               # Core libraries
+│   ├── auth/          # Better Auth setup
+│   └── db/            # Drizzle ORM setup
+└── routes/            # File-based routing
+    ├── (app)/         # Authenticated routes
+    ├── (auth)/        # Login/signup routes
+    └── (public)/      # Public routes
+```
 
-## Enhanced Features
+## 🚢 Deploy to Cloudflare
 
-### Authentication Control Switches
-
-This template adds the following authentication control switches that can be easily configured through environment variables:
-
-- **VITE_ALLOW_SIGNUP**: Whether to allow user registration
-- **VITE_ALLOW_PASSWORD_AUTH**: Whether to enable email/password login
-- **VITE_ALLOW_GITHUB_AUTH**: Whether to enable GitHub social login
-- **VITE_ALLOW_GOOGLE_AUTH**: Whether to enable Google social login
-
-These switches help you flexibly configure your application's authentication methods as needed.
-
-### Configurable Application Name
-
-With the **VITE_APP_NAME** environment variable, you can easily change the name of your application, which will automatically be reflected in:
-
-- Browser tab title
-- Page metadata description
-- Login and registration pages
-
-## Useful Tools
-
-#### Scripts
-
-These scripts in [package.json](./package.json#L5) use **pnpm** by default, but you can modify them to use your preferred package manager.
-
-- **`auth:generate`** - If you modify the Better Auth [configuration](./src/lib/server/auth.ts), you can regenerate the [authentication database schema](./src/lib/server/schema/auth.schema.ts).
-- **`db`** - Run drizzle-kit commands (e.g., `pnpm db generate` to generate migrations).
-- **`ui`** - shadcn/ui CLI (e.g., `pnpm ui add button` to add a button component).
-- **`format`** and **`lint`** - Run Prettier and ESLint.
-- **`deps`** - Selectively upgrade dependencies using npm-check-updates.
+1. Create a D1 database in Cloudflare Dashboard
+2. Update `wrangler.toml` with your database ID
+3. Set secrets: `pnpm cf:secret put BETTER_AUTH_SECRET`
+4. Deploy: `pnpm cf:deploy`

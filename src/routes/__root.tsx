@@ -1,4 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   createRootRouteWithContext,
   HeadContent,
@@ -6,36 +7,20 @@ import {
   ScriptOnce,
   Scripts,
 } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
-
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-
-import { APP_CONFIG } from "~/lib/auth-client";
-import { auth } from "~/lib/server/auth";
-import appCss from "~/lib/styles/app.css?url";
-
-import Layout from "~/components/layout/Layout";
-import { Toaster } from "~/components/ui/sonner";
-
-const getUser = createServerFn({ method: "GET" }).handler(async () => {
-  const { headers } = getWebRequest()!;
-  const session = await auth.api.getSession({ headers });
-
-  return session?.user || null;
-});
+import { RootShell } from "~/components/layout/RootShell";
+import { clientEnv } from "~/config/client-env";
+import { authQueryOptions, type AuthInfo } from "~/lib/auth/queries";
+import appCss from "~/styles.css?url";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
-  user: Awaited<ReturnType<typeof getUser>>;
+  user: AuthInfo["user"];
+  isAdmin: boolean;
 }>()({
   beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.fetchQuery({
-      queryKey: ["user"],
-      queryFn: ({ signal }) => getUser({ signal }),
-    }); // we're using react-query for caching, see router.tsx
-    return { user };
+    const { user, isAdmin } = await context.queryClient.fetchQuery(authQueryOptions()); // we're using react-query for caching, see router.tsx
+    return { user, isAdmin };
   },
   head: () => ({
     meta: [
@@ -47,11 +32,11 @@ export const Route = createRootRouteWithContext<{
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: APP_CONFIG.APP_NAME,
+        title: clientEnv.VITE_APP_NAME,
       },
       {
         name: "description",
-        content: `Welcome to ${APP_CONFIG.APP_NAME}`,
+        content: `Welcome to ${clientEnv.VITE_APP_NAME}`,
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -62,10 +47,9 @@ export const Route = createRootRouteWithContext<{
 function RootComponent() {
   return (
     <RootDocument>
-      <Layout>
+      <RootShell>
         <Outlet />
-        <Toaster />
-      </Layout>
+      </RootShell>
     </RootDocument>
   );
 }

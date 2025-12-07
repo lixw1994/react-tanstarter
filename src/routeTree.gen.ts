@@ -8,50 +8,44 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ProfileRouteRouteImport } from './routes/profile/route'
-import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
+import { Route as publicRouteRouteImport } from './routes/(public)/route'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProfileIndexRouteImport } from './routes/profile/index'
-import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as appRouteRouteImport } from './routes/(app)/route'
+import { Route as publicIndexRouteImport } from './routes/(public)/index'
+import { Route as publicAboutRouteImport } from './routes/(public)/about'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
-import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
-import { ServerRoute as ApiAdminCheckAdminServerRouteImport } from './routes/api/admin/check-admin'
+import { Route as appSettingsRouteImport } from './routes/(app)/settings'
+import { Route as appProfileRouteImport } from './routes/(app)/profile'
+import { Route as appPageBRouteImport } from './routes/(app)/page-b'
+import { Route as appPageARouteImport } from './routes/(app)/page-a'
+import { Route as appDashboardRouteImport } from './routes/(app)/dashboard'
+import { Route as appAdminRouteRouteImport } from './routes/(app)/admin/route'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as appAdminUserManagementIndexRouteImport } from './routes/(app)/admin/user-management/index'
 
-const rootServerRouteImport = createServerRootRoute()
-
-const ProfileRouteRoute = ProfileRouteRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRouteRoute = DashboardRouteRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const publicRouteRoute = publicRouteRouteImport.update({
+  id: '/(public)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authRouteRoute = authRouteRouteImport.update({
   id: '/(auth)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const appRouteRoute = appRouteRouteImport.update({
+  id: '/(app)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProfileIndexRoute = ProfileIndexRouteImport.update({
+const publicIndexRoute = publicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ProfileRouteRoute,
+  getParentRoute: () => publicRouteRoute,
 } as any)
-const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardRouteRoute,
+const publicAboutRoute = publicAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => publicRouteRoute,
 } as any)
 const authSignupRoute = authSignupRouteImport.update({
   id: '/signup',
@@ -63,144 +57,185 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => authRouteRoute,
 } as any)
-const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+const appSettingsRoute = appSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appProfileRoute = appProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appPageBRoute = appPageBRouteImport.update({
+  id: '/page-b',
+  path: '/page-b',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appPageARoute = appPageARouteImport.update({
+  id: '/page-a',
+  path: '/page-a',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appDashboardRoute = appDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appAdminRouteRoute = appAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
-  getParentRoute: () => rootServerRouteImport,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAdminCheckAdminServerRoute =
-  ApiAdminCheckAdminServerRouteImport.update({
-    id: '/api/admin/check-admin',
-    path: '/api/admin/check-admin',
-    getParentRoute: () => rootServerRouteImport,
+const appAdminUserManagementIndexRoute =
+  appAdminUserManagementIndexRouteImport.update({
+    id: '/user-management/',
+    path: '/user-management/',
+    getParentRoute: () => appAdminRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof authRouteRouteWithChildren
-  '/dashboard': typeof DashboardRouteRouteWithChildren
-  '/profile': typeof ProfileRouteRouteWithChildren
+  '/admin': typeof appAdminRouteRouteWithChildren
+  '/dashboard': typeof appDashboardRoute
+  '/page-a': typeof appPageARoute
+  '/page-b': typeof appPageBRoute
+  '/profile': typeof appProfileRoute
+  '/settings': typeof appSettingsRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
-  '/dashboard/': typeof DashboardIndexRoute
-  '/profile/': typeof ProfileIndexRoute
+  '/about': typeof publicAboutRoute
+  '/': typeof publicIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/admin/user-management': typeof appAdminUserManagementIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof authRouteRouteWithChildren
+  '/admin': typeof appAdminRouteRouteWithChildren
+  '/dashboard': typeof appDashboardRoute
+  '/page-a': typeof appPageARoute
+  '/page-b': typeof appPageBRoute
+  '/profile': typeof appProfileRoute
+  '/settings': typeof appSettingsRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
-  '/dashboard': typeof DashboardIndexRoute
-  '/profile': typeof ProfileIndexRoute
+  '/about': typeof publicAboutRoute
+  '/': typeof publicIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/admin/user-management': typeof appAdminUserManagementIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/(app)': typeof appRouteRouteWithChildren
   '/(auth)': typeof authRouteRouteWithChildren
-  '/dashboard': typeof DashboardRouteRouteWithChildren
-  '/profile': typeof ProfileRouteRouteWithChildren
+  '/(public)': typeof publicRouteRouteWithChildren
+  '/(app)/admin': typeof appAdminRouteRouteWithChildren
+  '/(app)/dashboard': typeof appDashboardRoute
+  '/(app)/page-a': typeof appPageARoute
+  '/(app)/page-b': typeof appPageBRoute
+  '/(app)/profile': typeof appProfileRoute
+  '/(app)/settings': typeof appSettingsRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/signup': typeof authSignupRoute
-  '/dashboard/': typeof DashboardIndexRoute
-  '/profile/': typeof ProfileIndexRoute
+  '/(public)/about': typeof publicAboutRoute
+  '/(public)/': typeof publicIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/(app)/admin/user-management/': typeof appAdminUserManagementIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
+    | '/admin'
     | '/dashboard'
+    | '/page-a'
+    | '/page-b'
     | '/profile'
+    | '/settings'
     | '/login'
     | '/signup'
-    | '/dashboard/'
-    | '/profile/'
+    | '/about'
+    | '/'
+    | '/api/auth/$'
+    | '/admin/user-management'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/dashboard' | '/profile'
+  to:
+    | '/admin'
+    | '/dashboard'
+    | '/page-a'
+    | '/page-b'
+    | '/profile'
+    | '/settings'
+    | '/login'
+    | '/signup'
+    | '/about'
+    | '/'
+    | '/api/auth/$'
+    | '/admin/user-management'
   id:
     | '__root__'
-    | '/'
+    | '/(app)'
     | '/(auth)'
-    | '/dashboard'
-    | '/profile'
+    | '/(public)'
+    | '/(app)/admin'
+    | '/(app)/dashboard'
+    | '/(app)/page-a'
+    | '/(app)/page-b'
+    | '/(app)/profile'
+    | '/(app)/settings'
     | '/(auth)/login'
     | '/(auth)/signup'
-    | '/dashboard/'
-    | '/profile/'
+    | '/(public)/about'
+    | '/(public)/'
+    | '/api/auth/$'
+    | '/(app)/admin/user-management/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  appRouteRoute: typeof appRouteRouteWithChildren
   authRouteRoute: typeof authRouteRouteWithChildren
-  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
-  ProfileRouteRoute: typeof ProfileRouteRouteWithChildren
-}
-export interface FileServerRoutesByFullPath {
-  '/api/admin/check-admin': typeof ApiAdminCheckAdminServerRoute
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/admin/check-admin': typeof ApiAdminCheckAdminServerRoute
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/admin/check-admin': typeof ApiAdminCheckAdminServerRoute
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/admin/check-admin' | '/api/auth/$'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/admin/check-admin' | '/api/auth/$'
-  id: '__root__' | '/api/admin/check-admin' | '/api/auth/$'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiAdminCheckAdminServerRoute: typeof ApiAdminCheckAdminServerRoute
-  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
+  publicRouteRoute: typeof publicRouteRouteWithChildren
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteRouteImport
+    '/(public)': {
+      id: '/(public)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof publicRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)': {
       id: '/(auth)'
-      path: '/'
-      fullPath: '/'
+      path: ''
+      fullPath: ''
       preLoaderRoute: typeof authRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/(app)': {
+      id: '/(app)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/profile/': {
-      id: '/profile/'
+    '/(public)/': {
+      id: '/(public)/'
       path: '/'
-      fullPath: '/profile/'
-      preLoaderRoute: typeof ProfileIndexRouteImport
-      parentRoute: typeof ProfileRouteRoute
+      fullPath: '/'
+      preLoaderRoute: typeof publicIndexRouteImport
+      parentRoute: typeof publicRouteRoute
     }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRouteRoute
+    '/(public)/about': {
+      id: '/(public)/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof publicAboutRouteImport
+      parentRoute: typeof publicRouteRoute
     }
     '/(auth)/signup': {
       id: '/(auth)/signup'
@@ -216,26 +251,98 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof authRouteRoute
     }
-  }
-}
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
+    '/(app)/settings': {
+      id: '/(app)/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof appSettingsRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/profile': {
+      id: '/(app)/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof appProfileRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/page-b': {
+      id: '/(app)/page-b'
+      path: '/page-b'
+      fullPath: '/page-b'
+      preLoaderRoute: typeof appPageBRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/page-a': {
+      id: '/(app)/page-a'
+      path: '/page-a'
+      fullPath: '/page-a'
+      preLoaderRoute: typeof appPageARouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/dashboard': {
+      id: '/(app)/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof appDashboardRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/admin': {
+      id: '/(app)/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof appAdminRouteRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/api/admin/check-admin': {
-      id: '/api/admin/check-admin'
-      path: '/api/admin/check-admin'
-      fullPath: '/api/admin/check-admin'
-      preLoaderRoute: typeof ApiAdminCheckAdminServerRouteImport
-      parentRoute: typeof rootServerRouteImport
+    '/(app)/admin/user-management/': {
+      id: '/(app)/admin/user-management/'
+      path: '/user-management'
+      fullPath: '/admin/user-management'
+      preLoaderRoute: typeof appAdminUserManagementIndexRouteImport
+      parentRoute: typeof appAdminRouteRoute
     }
   }
 }
+
+interface appAdminRouteRouteChildren {
+  appAdminUserManagementIndexRoute: typeof appAdminUserManagementIndexRoute
+}
+
+const appAdminRouteRouteChildren: appAdminRouteRouteChildren = {
+  appAdminUserManagementIndexRoute: appAdminUserManagementIndexRoute,
+}
+
+const appAdminRouteRouteWithChildren = appAdminRouteRoute._addFileChildren(
+  appAdminRouteRouteChildren,
+)
+
+interface appRouteRouteChildren {
+  appAdminRouteRoute: typeof appAdminRouteRouteWithChildren
+  appDashboardRoute: typeof appDashboardRoute
+  appPageARoute: typeof appPageARoute
+  appPageBRoute: typeof appPageBRoute
+  appProfileRoute: typeof appProfileRoute
+  appSettingsRoute: typeof appSettingsRoute
+}
+
+const appRouteRouteChildren: appRouteRouteChildren = {
+  appAdminRouteRoute: appAdminRouteRouteWithChildren,
+  appDashboardRoute: appDashboardRoute,
+  appPageARoute: appPageARoute,
+  appPageBRoute: appPageBRoute,
+  appProfileRoute: appProfileRoute,
+  appSettingsRoute: appSettingsRoute,
+}
+
+const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
+  appRouteRouteChildren,
+)
 
 interface authRouteRouteChildren {
   authLoginRoute: typeof authLoginRoute
@@ -251,43 +358,35 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
   authRouteRouteChildren,
 )
 
-interface DashboardRouteRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
+interface publicRouteRouteChildren {
+  publicAboutRoute: typeof publicAboutRoute
+  publicIndexRoute: typeof publicIndexRoute
 }
 
-const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
+const publicRouteRouteChildren: publicRouteRouteChildren = {
+  publicAboutRoute: publicAboutRoute,
+  publicIndexRoute: publicIndexRoute,
 }
 
-const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
-  DashboardRouteRouteChildren,
-)
-
-interface ProfileRouteRouteChildren {
-  ProfileIndexRoute: typeof ProfileIndexRoute
-}
-
-const ProfileRouteRouteChildren: ProfileRouteRouteChildren = {
-  ProfileIndexRoute: ProfileIndexRoute,
-}
-
-const ProfileRouteRouteWithChildren = ProfileRouteRoute._addFileChildren(
-  ProfileRouteRouteChildren,
+const publicRouteRouteWithChildren = publicRouteRoute._addFileChildren(
+  publicRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  appRouteRoute: appRouteRouteWithChildren,
   authRouteRoute: authRouteRouteWithChildren,
-  DashboardRouteRoute: DashboardRouteRouteWithChildren,
-  ProfileRouteRoute: ProfileRouteRouteWithChildren,
+  publicRouteRoute: publicRouteRouteWithChildren,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiAdminCheckAdminServerRoute: ApiAdminCheckAdminServerRoute,
-  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

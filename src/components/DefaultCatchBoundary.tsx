@@ -6,9 +6,11 @@ import {
   useMatch,
   useRouter,
 } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 
 export function DefaultCatchBoundary({ error }: Readonly<ErrorComponentProps>) {
+  const { t } = useTranslation();
   const router = useRouter();
   const isRoot = useMatch({
     strict: false,
@@ -21,17 +23,12 @@ export function DefaultCatchBoundary({ error }: Readonly<ErrorComponentProps>) {
     <div className="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 p-4">
       <ErrorComponent error={error} />
       <div className="flex flex-wrap items-center gap-2">
-        <Button
-          type="button"
-          onClick={() => {
-            router.invalidate();
-          }}
-        >
-          Try Again
+        <Button type="button" onClick={() => router.invalidate()}>
+          {t("errors.tryAgain")}
         </Button>
         {isRoot ? (
           <Button asChild variant="secondary">
-            <Link to="/">Home</Link>
+            <Link to="/">{t("errors.home")}</Link>
           </Button>
         ) : (
           <Button asChild variant="secondary">
@@ -42,7 +39,7 @@ export function DefaultCatchBoundary({ error }: Readonly<ErrorComponentProps>) {
                 window.history.back();
               }}
             >
-              Go Back
+              {t("errors.goBack")}
             </Link>
           </Button>
         )}

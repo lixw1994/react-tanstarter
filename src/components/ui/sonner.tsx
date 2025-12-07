@@ -5,11 +5,11 @@ const Toaster = ({ ...props }: ToasterProps) => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    // 检测当前主题
+    // Detect current theme
     const currentTheme = localStorage.theme === "dark" ? "dark" : "light";
     setTheme(currentTheme);
 
-    // 监听主题变化
+    // Listen for theme changes
     const observer = new MutationObserver(() => {
       const isDark = document.documentElement.classList.contains("dark");
       setTheme(isDark ? "dark" : "light");
