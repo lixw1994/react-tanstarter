@@ -13,7 +13,7 @@ import authClient from "~/lib/auth/auth-client";
 export const Route = createFileRoute("/(public)/")({
   beforeLoad: async ({ context }) => {
     if (context.user) {
-      throw redirect({ to: "/page-a" });
+      throw redirect({ to: "/dashboard" });
     }
   },
   component: LandingPage,
@@ -158,7 +158,7 @@ function AuthForm() {
     setErrorMessage("");
 
     authClient.signIn.email(
-      { email, password, callbackURL: "/page-a" },
+      { email, password, callbackURL: "/dashboard" },
       {
         onError: (ctx) => {
           setErrorMessage(ctx.error.message);
@@ -166,7 +166,7 @@ function AuthForm() {
         },
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ["authInfo"] });
-          navigate({ to: "/page-a" });
+          navigate({ to: "/dashboard" });
         },
       },
     );
@@ -222,7 +222,7 @@ function AuthForm() {
 
       {/* Social Login */}
       <SocialLoginButtons
-        callbackURL="/page-a"
+        callbackURL="/dashboard"
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setErrorMessage={setErrorMessage}

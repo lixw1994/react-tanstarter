@@ -1,14 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 import { serverEnv } from "~/config/server-env";
-import { getAuth } from "~/lib/auth";
 
 /**
  * Server function to get current user's auth info.
  */
 export const $getAuthInfo = createServerFn({ method: "GET" }).handler(
   async ({ context }) => {
-    const session = await getAuth(context.db).api.getSession({
+    const session = await context.auth.api.getSession({
       headers: getRequest().headers,
       returnHeaders: true,
     });

@@ -1,7 +1,6 @@
 import { createMiddleware } from "@tanstack/react-start";
 import { getRequest, setResponseStatus } from "@tanstack/react-start/server";
 import { serverEnv } from "~/config/server-env";
-import { getAuth } from "~/lib/auth";
 
 // https://tanstack.com/start/latest/docs/framework/react/guide/middleware
 // This is just an example middleware that you can modify and use in your server functions or routes.
@@ -10,7 +9,7 @@ import { getAuth } from "~/lib/auth";
  * Middleware to force authentication on server requests (including server functions), and add the user to the context.
  */
 export const authMiddleware = createMiddleware().server(async ({ context, next }) => {
-  const session = await getAuth(context.db).api.getSession({
+  const session = await context.auth.api.getSession({
     headers: getRequest().headers,
     query: {
       // ensure session is fresh
@@ -31,7 +30,7 @@ export const authMiddleware = createMiddleware().server(async ({ context, next }
  * Middleware to force authentication and check if the user is an admin.
  */
 export const adminMiddleware = createMiddleware().server(async ({ context, next }) => {
-  const session = await getAuth(context.db).api.getSession({
+  const session = await context.auth.api.getSession({
     headers: getRequest().headers,
     query: {
       disableCookieCache: true,
