@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
+import { adminMiddleware } from "~/lib/auth/middleware";
 import { user } from "~/lib/db/schema";
 
 export interface AdminUser {
@@ -15,8 +16,9 @@ export interface AdminUser {
 /**
  * Server function to fetch all users (admin only)
  */
-export const $getUsers = createServerFn({ method: "GET" }).handler(
-  async ({ context }): Promise<AdminUser[]> => {
+export const $getUsers = createServerFn({ method: "GET" })
+  .middleware([adminMiddleware])
+  .handler(async ({ context }): Promise<AdminUser[]> => {
     const users = await context.db
       .select({
         id: user.id,
@@ -30,13 +32,13 @@ export const $getUsers = createServerFn({ method: "GET" }).handler(
       .orderBy(desc(user.createdAt));
 
     return users;
-  },
-);
+  });
 
 /**
  * Server function to delete a user (admin only)
  */
 export const $deleteUser = createServerFn({ method: "POST" })
+  .middleware([adminMiddleware])
   .inputValidator(z.object({ userId: z.string().min(1, "userId is required") }))
   .handler(async ({ data, context }) => {
     await context.db.delete(user).where(eq(user.id, data.userId));
