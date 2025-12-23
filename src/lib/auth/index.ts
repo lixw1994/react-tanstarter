@@ -23,7 +23,7 @@ export function getAuth(db: DB) {
         return {
           id: profile.data.union_id || profile.data.open_id,
           name: profile.data.name,
-          email: profile.data.email || `${profile.data.en_name}@joycastle.mobi`,
+          email: profile.data.email || `${profile.data.en_name}@example.com`,
           emailVerified: true,
           image: profile.data.avatar_url,
         };
