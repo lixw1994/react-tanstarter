@@ -92,7 +92,7 @@ function HeroSection() {
       {/* Badge */}
       <div className="mb-8">
         <span className="bg-muted/50 text-muted-foreground inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+          <span className="bg-success h-1.5 w-1.5 rounded-full" />
           {t("landing.openSource")}
         </span>
       </div>

@@ -62,13 +62,16 @@
     "verified": "已验证",
     "unverified": "未验证",
     "noUsers": "暂无用户数据",
-    "confirmDelete": "确定要删除用户 \"{{name}}\" 吗？此操作不可撤销。"
+    "confirmDelete": "确定要删除用户 \"{{name}}\" 吗？此操作不可撤销。",
+    "deleteUser": "删除用户 {{name}}",
+    "deleteDialogTitle": "删除用户"
   },
   "sidebar": {
     "darkMode": "暗色模式",
     "lightMode": "亮色模式",
     "settings": "设置",
-    "admin": "管理"
+    "admin": "管理",
+    "userMenu": "用户菜单"
   },
   "auth": {
     "connectTo": "连接到 {{appName}}",

@@ -3,6 +3,18 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PageContainer } from "~/components/layout/app/PageContainer";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
+import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { $getUsers } from "./-functions";
@@ -20,13 +32,11 @@ function UserManagementPage() {
 
   const deleteMutation = useDeleteUserMutation();
 
-  const handleDelete = (userId: string, userName: string) => {
-    if (confirm(t("userManagement.confirmDelete", { name: userName }))) {
-      setDeletingId(userId);
-      deleteMutation.mutate(userId, {
-        onSettled: () => setDeletingId(null),
-      });
-    }
+  const handleDelete = (userId: string) => {
+    setDeletingId(userId);
+    deleteMutation.mutate(userId, {
+      onSettled: () => setDeletingId(null),
+    });
   };
 
   const formatDate = (date: Date) => {
@@ -92,31 +102,50 @@ function UserManagementPage() {
                       {user.email}
                     </td>
                     <td className="px-4 py-3">
-                      <span
-                        className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
-                          user.emailVerified
-                            ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                            : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400"
-                        }`}
-                      >
+                      <Badge variant={user.emailVerified ? "success" : "warning"}>
                         {user.emailVerified
                           ? t("userManagement.verified")
                           : t("userManagement.unverified")}
-                      </span>
+                      </Badge>
                     </td>
                     <td className="text-muted-foreground px-4 py-3 text-sm">
                       {formatDate(user.createdAt)}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(user.id, user.name)}
-                        disabled={deletingId === user.id}
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            disabled={deletingId === user.id}
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                            aria-label={t("userManagement.deleteUser", {
+                              name: user.name,
+                            })}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              {t("userManagement.deleteDialogTitle")}
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              {t("userManagement.confirmDelete", { name: user.name })}
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(user.id)}
+                              className="bg-destructive hover:bg-destructive/90 text-white"
+                            >
+                              {t("common.delete")}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </td>
                   </tr>
                 ))}

@@ -62,13 +62,16 @@
     "verified": "Verified",
     "unverified": "Unverified",
     "noUsers": "No user data",
-    "confirmDelete": "Are you sure you want to delete user \"{{name}}\"? This action cannot be undone."
+    "confirmDelete": "Are you sure you want to delete user \"{{name}}\"? This action cannot be undone.",
+    "deleteUser": "Delete user {{name}}",
+    "deleteDialogTitle": "Delete User"
   },
   "sidebar": {
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "settings": "Settings",
-    "admin": "Admin"
+    "admin": "Admin",
+    "userMenu": "User menu"
   },
   "auth": {
     "connectTo": "Connect to {{appName}}",

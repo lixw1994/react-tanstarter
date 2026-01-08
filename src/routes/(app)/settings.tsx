@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PageContainer } from "~/components/layout/app/PageContainer";
 import { Button } from "~/components/ui/button";
@@ -11,14 +11,15 @@ export const Route = createFileRoute("/(app)/settings")({
   component: SettingsPage,
 });
 
+function getInitialTheme(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+  return stored ?? "light";
+}
+
 function SettingsPage() {
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-    setTheme(stored ?? "light");
-  }, []);
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
 
   const handleThemeChange = (newTheme: "light" | "dark") => {
     setTheme(newTheme);
