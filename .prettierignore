@@ -1,18 +1,9 @@
-# lockfiles
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
-bun.lock
+# Ignore everything
+*
 
-# misc
-routeTree.gen.ts
-drizzle/
-.drizzle/
+# Except src/
+!src/
+!src/**
 
-# build outputs
-.vercel
-.output
-.vinxi
-.wrangler
-.netlify
-dist
+# Ignore generated files
+src/routeTree.gen.ts
