@@ -1,7 +1,18 @@
-import dotenv from "dotenv";
+/**
+ * Drizzle ORM Configuration
+ *
+ * Uses Vite's loadEnv for environment variable loading:
+ *   - development: .env → .env.local (local SQLite via wrangler)
+ *   - production:  .env → .env.production → .env.production.local (remote D1 via HTTP)
+ *
+ * Usage:
+ *   pnpm db:push             # Push to local D1 (development)
+ *   pnpm db:push:production  # Push to remote D1 (production)
+ */
 import { defineConfig } from "drizzle-kit";
 import fs from "fs";
 import path from "path";
+import { loadEnv } from "vite";
 
 function getLocalD1DB() {
   try {
@@ -14,42 +25,36 @@ function getLocalD1DB() {
       throw new Error(`.sqlite file not found in ${basePath}`);
     }
 
-    const url = path.resolve(basePath, dbFile);
-    return url;
+    return path.resolve(basePath, dbFile);
   } catch (err) {
-    console.log(`Error  ${err}`);
+    console.log(`Error: ${err}`);
   }
 }
 
-// Load env variables: .env first, then override with environment-specific file
-const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.local";
-dotenv.config(); // Load .env as base
-dotenv.config({ path: envFile, override: true }); // Override with specific env file
+// Load env using Vite's loadEnv (respects .env, .env.local, .env.[mode], .env.[mode].local)
+const mode = process.env.NODE_ENV || "development";
+const env = loadEnv(mode, process.cwd(), "");
+const isLocal = mode === "development";
 
-console.log(
-  process.env.NODE_ENV,
-  process.env.NODE_ENV === "production"
-    ? process.env.CLOUDFLARE_DATABASE_ID
-    : getLocalD1DB(),
-);
+console.log(`[drizzle] mode=${mode}, db=${isLocal ? getLocalD1DB() : env.CLOUDFLARE_DATABASE_ID}`);
 
 export default defineConfig({
   schema: "./src/lib/db/schema/index.ts",
   out: "./drizzle",
   dialect: "sqlite",
   casing: "snake_case",
-  ...(process.env.NODE_ENV === "production"
+  ...(isLocal
     ? {
-        driver: "d1-http",
         dbCredentials: {
-          accountId: process.env.CLOUDFLARE_ACCOUNT_ID!,
-          databaseId: process.env.CLOUDFLARE_DATABASE_ID!,
-          token: process.env.CLOUDFLARE_D1_TOKEN!,
+          url: getLocalD1DB(),
         },
       }
     : {
+        driver: "d1-http",
         dbCredentials: {
-          url: getLocalD1DB(),
+          accountId: env.CLOUDFLARE_ACCOUNT_ID!,
+          databaseId: env.CLOUDFLARE_DATABASE_ID!,
+          token: env.CLOUDFLARE_D1_TOKEN!,
         },
       }),
 });

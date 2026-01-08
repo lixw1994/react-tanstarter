@@ -7,6 +7,7 @@ main = "./src/server-entry.ts"
 [observability]
 enabled = true
 
+# Public variables (keep in sync with .env.production)
 [vars]
 VITE_BASE_URL = "https://tanstarter.flybullet.net"
 VITE_APP_NAME = "Tanstarter"
@@ -15,18 +16,16 @@ VITE_ALLOW_PASSWORD_AUTH = "true"
 VITE_ALLOW_GITHUB_AUTH = "true"
 VITE_ALLOW_GOOGLE_AUTH = "true"
 VITE_ALLOW_FEISHU_AUTH = "false"
-ADMIN_EMAILS = "lixianwei@example.com,lixianwei1994@gmail.com"
 BETTER_AUTH_URL = "https://tanstarter.flybullet.net"
 
-# other vars encrypted via `wrangler secret put <KEY_NAME>`
-# vars not show in .env.example
-# DATABASE_URL
-# BETTER_AUTH_SECRET
-# GITHUB_CLIENT_ID
+# Secrets - set via `pnpm cf:secret put <KEY>`
+# ADMIN_EMAILS          - Comma-separated admin emails
+# BETTER_AUTH_SECRET    - Auth secret (min 32 chars)
+# GITHUB_CLIENT_ID      - GitHub OAuth
 # GITHUB_CLIENT_SECRET
-# GOOGLE_CLIENT_ID
+# GOOGLE_CLIENT_ID      - Google OAuth
 # GOOGLE_CLIENT_SECRET
-# FEISHU_CLIENT_ID
+# FEISHU_CLIENT_ID      - Feishu OAuth
 # FEISHU_CLIENT_SECRET
 
 # [[r2_buckets]]
@@ -37,4 +36,3 @@ BETTER_AUTH_URL = "https://tanstarter.flybullet.net"
 binding = "DB"
 database_name = "tanstarter-db"
 database_id = "810cbd35-4afa-4ac2-a28d-72c8b448b1a8"
-migrations_dir = "drizzle"
