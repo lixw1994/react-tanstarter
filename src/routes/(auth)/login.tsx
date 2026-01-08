@@ -58,7 +58,7 @@ function LoginForm() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <div className="flex flex-col items-center gap-4">
-              <img src="/login_logo.svg" alt="Home Page Logo" className="mb-4 h-12" />
+              <img src="/logo.svg" alt="Logo" className="mb-4 h-12" />
               <h1 className="text-2xl font-semibold tracking-tight">
                 {t("auth.connectTo", { appName: clientEnv.VITE_APP_NAME })}
               </h1>

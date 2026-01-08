@@ -26,11 +26,7 @@ export function SidebarHeader({ appName, logo }: SidebarHeaderProps) {
           className="flex items-center gap-3 font-bold transition-transform hover:scale-105"
           onClick={isMobile ? closeMobile : undefined}
         >
-          {logo ?? (
-            <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-lg shadow-lg">
-              <span className="text-sm">✦</span>
-            </div>
-          )}
+          {logo ?? <img src="/logo.svg" alt={appName} className="h-8 w-auto" />}
           <span className="from-foreground to-muted-foreground bg-linear-to-r bg-clip-text text-transparent">
             {appName}
           </span>
