@@ -27,8 +27,7 @@ export function Sidebar({
 
   return (
     <>
-      {isMobile && !isMobileOpen && <SidebarHeader appName={appName} logo={logo} />}
-
+      {/* Mobile overlay */}
       {isMobile && isMobileOpen && (
         <div
           className={cn(

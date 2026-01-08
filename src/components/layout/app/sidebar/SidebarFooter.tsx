@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { LogOut, Moon, Sun, User } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "~/components/ui/button";
 import {
@@ -30,6 +30,12 @@ interface AuthInfo {
   isAdmin: boolean;
 }
 
+function getInitialTheme(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+  return stored ?? "light";
+}
+
 export function SidebarFooter() {
   const { t } = useTranslation();
   const { isCollapsed, isMobile, closeMobile } = useSidebar();
@@ -37,14 +43,7 @@ export function SidebarFooter() {
   const authInfo = queryClient.getQueryData<AuthInfo>(["authInfo"]);
   const user = authInfo?.user;
 
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-    const initial = stored ?? "light";
-    setTheme(initial);
-    document.documentElement.classList.toggle("dark", initial === "dark");
-  }, []);
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
 
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
@@ -81,6 +80,9 @@ export function SidebarFooter() {
                 size="icon"
                 onClick={toggleTheme}
                 className="h-10 w-full"
+                aria-label={
+                  theme === "light" ? t("sidebar.darkMode") : t("sidebar.lightMode")
+                }
               >
                 {theme === "light" ? (
                   <Moon className="h-4 w-4" />
@@ -99,7 +101,12 @@ export function SidebarFooter() {
             <TooltipTrigger asChild>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-10 w-full">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-10 w-full"
+                    aria-label={t("sidebar.userMenu")}
+                  >
                     <img
                       src={avatarUrl}
                       alt={displayName}
@@ -195,6 +202,9 @@ export function SidebarFooter() {
                 size="icon"
                 onClick={toggleTheme}
                 className="h-9 w-9 shrink-0"
+                aria-label={
+                  theme === "light" ? t("sidebar.darkMode") : t("sidebar.lightMode")
+                }
               >
                 {theme === "light" ? (
                   <Moon className="h-4 w-4" />

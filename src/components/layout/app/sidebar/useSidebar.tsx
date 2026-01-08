@@ -1,9 +1,11 @@
 import {
   createContext,
+  use,
   useCallback,
-  useContext,
   useEffect,
+  useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -24,11 +26,27 @@ interface SidebarContextValue {
 const SidebarContext = createContext<SidebarContextValue | null>(null);
 
 export function useSidebar() {
-  const context = useContext(SidebarContext);
+  const context = use(SidebarContext);
   if (!context) {
     throw new Error("useSidebar must be used within a SidebarProvider");
   }
   return context;
+}
+
+function getInitialCollapsed(defaultCollapsed: boolean): boolean {
+  if (typeof window === "undefined") return defaultCollapsed;
+  const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+  return stored !== null ? stored === "true" : defaultCollapsed;
+}
+
+function subscribeToResize(callback: () => void) {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+}
+
+function getIsMobile() {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < MOBILE_BREAKPOINT;
 }
 
 interface SidebarProviderProps {
@@ -40,37 +58,39 @@ export function SidebarProvider({
   children,
   defaultCollapsed = false,
 }: SidebarProviderProps) {
-  const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
+  const [isCollapsed, setIsCollapsed] = useState(() =>
+    getInitialCollapsed(defaultCollapsed),
+  );
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
-  // Initialize from localStorage and detect mobile
-  useEffect(() => {
-    const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
-    if (stored !== null) {
-      setIsCollapsed(stored === "true");
-    }
+  // Use useSyncExternalStore for responsive isMobile detection
+  const isMobile = useSyncExternalStore(subscribeToResize, getIsMobile, () => false);
 
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    };
+  // Track previous isMobile to detect transitions
+  const prevIsMobileRef = useRef(isMobile);
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Persist collapsed state
+  // Persist collapsed state to localStorage
   useEffect(() => {
     localStorage.setItem(SIDEBAR_STORAGE_KEY, String(isCollapsed));
   }, [isCollapsed]);
 
-  // Close mobile sidebar on resize to desktop
-  useEffect(() => {
-    if (!isMobile && isMobileOpen) {
+  // Handle resize: close mobile sidebar when transitioning to desktop
+  // This is done via the resize event subscription, not in useEffect
+  const closeMobileOnDesktop = useCallback(() => {
+    const wasIsMobile = prevIsMobileRef.current;
+    const nowIsMobile = getIsMobile();
+    prevIsMobileRef.current = nowIsMobile;
+
+    if (wasIsMobile && !nowIsMobile) {
       setIsMobileOpen(false);
     }
-  }, [isMobile, isMobileOpen]);
+  }, []);
+
+  // Subscribe to resize for closing mobile sidebar
+  useEffect(() => {
+    window.addEventListener("resize", closeMobileOnDesktop);
+    return () => window.removeEventListener("resize", closeMobileOnDesktop);
+  }, [closeMobileOnDesktop]);
 
   const toggle = useCallback(() => {
     setIsCollapsed((prev) => !prev);
@@ -93,7 +113,7 @@ export function SidebarProvider({
   }, []);
 
   return (
-    <SidebarContext.Provider
+    <SidebarContext
       value={{
         isCollapsed,
         isMobileOpen,
@@ -106,6 +126,6 @@ export function SidebarProvider({
       }}
     >
       {children}
-    </SidebarContext.Provider>
+    </SidebarContext>
   );
 }

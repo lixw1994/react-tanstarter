@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { useSidebar } from "./useSidebar";
@@ -10,23 +10,7 @@ interface SidebarHeaderProps {
 }
 
 export function SidebarHeader({ appName, logo }: SidebarHeaderProps) {
-  const { isCollapsed, isMobile, isMobileOpen, toggle, closeMobile, openMobile } =
-    useSidebar();
-
-  // Mobile hamburger button (rendered outside sidebar)
-  if (isMobile && !isMobileOpen) {
-    return (
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={openMobile}
-        className="bg-background fixed top-4 left-4 z-40 h-10 w-10 border shadow-md md:hidden"
-        aria-label="Open menu"
-      >
-        <Menu className="h-5 w-5" />
-      </Button>
-    );
-  }
+  const { isCollapsed, isMobile, toggle, closeMobile } = useSidebar();
 
   return (
     <div
@@ -43,7 +27,7 @@ export function SidebarHeader({ appName, logo }: SidebarHeaderProps) {
           onClick={isMobile ? closeMobile : undefined}
         >
           {logo ?? (
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-blue-500 to-purple-600 text-white shadow-lg">
+            <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-lg shadow-lg">
               <span className="text-sm">✦</span>
             </div>
           )}
