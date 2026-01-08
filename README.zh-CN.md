@@ -129,7 +129,7 @@ src/
 ### 1. 创建 D1 数据库
 
 ```bash
-pnpm cf:db create tanstarter-db
+pnpm wrangler d1 create tanstarter-db
 ```
 
 将返回的 `database_id` 更新到 `wrangler.toml`。

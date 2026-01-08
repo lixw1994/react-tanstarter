@@ -129,7 +129,7 @@ src/
 ### 1. Create D1 Database
 
 ```bash
-pnpm cf:db create tanstarter-db
+pnpm wrangler d1 create tanstarter-db
 ```
 
 Update `wrangler.toml` with the returned `database_id`.
