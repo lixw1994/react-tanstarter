@@ -1,5 +1,5 @@
 import { Globe, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "~/components/ui/button";
 import {
@@ -15,18 +15,18 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 
+function getInitialTheme(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+  return stored ?? "light";
+}
+
 /**
  * Compact theme and language switcher component for headers.
  */
 export function ThemeLangSwitcher() {
   const { i18n } = useTranslation();
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-    const initial = stored ?? "light";
-    setTheme(initial);
-  }, []);
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
 
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
@@ -87,13 +87,7 @@ export function ThemeLangSwitcher() {
  */
 export function ThemeLangDropdown() {
   const { i18n, t } = useTranslation();
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
-    const initial = stored ?? "light";
-    setTheme(initial);
-  }, []);
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
 
   const handleThemeChange = (newTheme: "light" | "dark") => {
     setTheme(newTheme);
