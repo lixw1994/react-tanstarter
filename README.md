@@ -54,6 +54,7 @@ This project follows Vite's env file convention:
 ```
 
 **Load order** (later files override earlier):
+
 ```
 .env → .env.local → .env.[mode] → .env.[mode].local
 ```
@@ -93,15 +94,15 @@ Go to **Settings → Language** to switch between English and 简体中文.
 
 ## 📦 Scripts
 
-| Command                   | Description                |
-| ------------------------- | -------------------------- |
-| `pnpm dev`                | Start development server   |
-| `pnpm build`              | Build for production       |
-| `pnpm db:push`            | Push schema to local D1    |
-| `pnpm db:push:production` | Push schema to remote D1   |
+| Command                   | Description                  |
+| ------------------------- | ---------------------------- |
+| `pnpm dev`                | Start development server     |
+| `pnpm build`              | Build for production         |
+| `pnpm db:push`            | Push schema to local D1      |
+| `pnpm db:push:production` | Push schema to remote D1     |
 | `pnpm cf:deploy`          | Deploy to Cloudflare Workers |
-| `pnpm ui`                 | Add shadcn/ui components   |
-| `pnpm auth:generate`      | Regenerate auth schema     |
+| `pnpm ui`                 | Add shadcn/ui components     |
+| `pnpm auth:generate`      | Regenerate auth schema       |
 
 ## 📁 Project Structure
 

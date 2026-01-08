@@ -54,6 +54,7 @@ pnpm dev
 ```
 
 **加载顺序**（后者覆盖前者）：
+
 ```
 .env → .env.local → .env.[mode] → .env.[mode].local
 ```
@@ -72,20 +73,20 @@ pnpm dev
 
 #### 服务端变量（密钥 - 放在 `.local` 文件中）
 
-| 变量                     | 说明                      |
-| ------------------------ | ------------------------- |
-| `ADMIN_EMAILS`           | 管理员邮箱（逗号分隔）    |
-| `BETTER_AUTH_SECRET`     | 认证密钥（至少 32 字符）  |
-| `BETTER_AUTH_URL`        | 认证回调基础 URL          |
-| `GITHUB_CLIENT_ID`       | GitHub OAuth 凭证         |
-| `GITHUB_CLIENT_SECRET`   |                           |
-| `GOOGLE_CLIENT_ID`       | Google OAuth 凭证         |
-| `GOOGLE_CLIENT_SECRET`   |                           |
-| `FEISHU_CLIENT_ID`       | 飞书 OAuth 凭证           |
-| `FEISHU_CLIENT_SECRET`   |                           |
+| 变量                     | 说明                        |
+| ------------------------ | --------------------------- |
+| `ADMIN_EMAILS`           | 管理员邮箱（逗号分隔）      |
+| `BETTER_AUTH_SECRET`     | 认证密钥（至少 32 字符）    |
+| `BETTER_AUTH_URL`        | 认证回调基础 URL            |
+| `GITHUB_CLIENT_ID`       | GitHub OAuth 凭证           |
+| `GITHUB_CLIENT_SECRET`   |                             |
+| `GOOGLE_CLIENT_ID`       | Google OAuth 凭证           |
+| `GOOGLE_CLIENT_SECRET`   |                             |
+| `FEISHU_CLIENT_ID`       | 飞书 OAuth 凭证             |
+| `FEISHU_CLIENT_SECRET`   |                             |
 | `CLOUDFLARE_ACCOUNT_ID`  | 用于 drizzle 远程数据库操作 |
-| `CLOUDFLARE_DATABASE_ID` |                           |
-| `CLOUDFLARE_D1_TOKEN`    |                           |
+| `CLOUDFLARE_DATABASE_ID` |                             |
+| `CLOUDFLARE_D1_TOKEN`    |                             |
 
 ### 切换语言
 
@@ -93,15 +94,15 @@ pnpm dev
 
 ## 📦 常用命令
 
-| 命令                      | 说明                    |
-| ------------------------- | ----------------------- |
-| `pnpm dev`                | 启动开发服务器          |
-| `pnpm build`              | 构建生产版本            |
-| `pnpm db:push`            | 推送结构到本地 D1       |
-| `pnpm db:push:production` | 推送结构到远程 D1       |
+| 命令                      | 说明                      |
+| ------------------------- | ------------------------- |
+| `pnpm dev`                | 启动开发服务器            |
+| `pnpm build`              | 构建生产版本              |
+| `pnpm db:push`            | 推送结构到本地 D1         |
+| `pnpm db:push:production` | 推送结构到远程 D1         |
 | `pnpm cf:deploy`          | 部署到 Cloudflare Workers |
-| `pnpm ui`                 | 添加 shadcn/ui 组件     |
-| `pnpm auth:generate`      | 重新生成认证结构        |
+| `pnpm ui`                 | 添加 shadcn/ui 组件       |
+| `pnpm auth:generate`      | 重新生成认证结构          |
 
 ## 📁 项目结构
 

@@ -36,7 +36,9 @@ const mode = process.env.NODE_ENV || "development";
 const env = loadEnv(mode, process.cwd(), "");
 const isLocal = mode === "development";
 
-console.log(`[drizzle] mode=${mode}, db=${isLocal ? getLocalD1DB() : env.CLOUDFLARE_DATABASE_ID}`);
+console.log(
+  `[drizzle] mode=${mode}, db=${isLocal ? getLocalD1DB() : env.CLOUDFLARE_DATABASE_ID}`,
+);
 
 export default defineConfig({
   schema: "./src/lib/db/schema/index.ts",
