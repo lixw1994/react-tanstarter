@@ -3,7 +3,7 @@ import { z } from "zod";
 const envSchema = z.object({
   ADMIN_EMAILS: z.string().transform((val) => val.trim().toLowerCase().split(",")),
   BETTER_AUTH_SECRET: z.string().min(32),
-  BETTER_AUTH_URL: z.string(),
+  BETTER_AUTH_URL: z.string().optional(),
   GITHUB_CLIENT_ID: z.string().optional(),
   GITHUB_CLIENT_SECRET: z.string().optional(),
   GOOGLE_CLIENT_ID: z.string().optional(),
