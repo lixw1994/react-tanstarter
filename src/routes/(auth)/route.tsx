@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { clientEnv } from "~/client-env";
 import { AuthLayout } from "~/components/layout/auth/AuthLayout";
-import { clientEnv } from "~/config/client-env";
 
 export const Route = createFileRoute("/(auth)")({
   component: RouteComponent,

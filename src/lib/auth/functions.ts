@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
-import { serverEnv } from "~/config/server-env";
+import { serverEnv } from "~/server-env";
 
 /**
  * Server function to get current user's auth info.

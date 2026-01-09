@@ -2,12 +2,12 @@ import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-ro
 import { ArrowRight, Check, Github, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { clientEnv } from "~/client-env";
 import { AuthDivider, SocialLoginButtons } from "~/components/auth/SocialLogin";
 import { ThemeLangSwitcher } from "~/components/common/ThemeLangSwitcher";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { clientEnv } from "~/config/client-env";
 import authClient from "~/lib/auth/auth-client";
 
 export const Route = createFileRoute("/(public)/")({

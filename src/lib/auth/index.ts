@@ -3,8 +3,8 @@ import { DB, drizzleAdapter } from "better-auth/adapters/drizzle";
 import { genericOAuth, GenericOAuthConfig } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
 
-import { clientEnv } from "~/config/client-env";
-import { serverEnv } from "~/config/server-env";
+import { clientEnv } from "~/client-env";
+import { serverEnv } from "~/server-env";
 
 // Create auth instance lazily
 export function getAuth(db: DB) {

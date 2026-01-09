@@ -1,6 +1,6 @@
 import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { clientEnv } from "~/client-env";
 import { AppLayout } from "~/components/layout/app/AppLayout";
-import { clientEnv } from "~/config/client-env";
 
 export const Route = createFileRoute("/(app)")({
   beforeLoad: async ({ context }) => {

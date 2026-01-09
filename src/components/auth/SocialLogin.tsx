@@ -1,7 +1,7 @@
 import { LoaderCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { clientEnv } from "~/client-env";
 import { Button } from "~/components/ui/button";
-import { clientEnv } from "~/config/client-env";
 import authClient from "~/lib/auth/auth-client";
 
 // GitHub Icon

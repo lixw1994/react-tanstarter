@@ -8,8 +8,8 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { clientEnv } from "~/client-env";
 import { RootShell } from "~/components/layout/RootShell";
-import { clientEnv } from "~/config/client-env";
 import { authQueryOptions, type AuthInfo } from "~/lib/auth/queries";
 import appCss from "~/styles.css?url";
 
