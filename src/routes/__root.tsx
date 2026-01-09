@@ -10,6 +10,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { clientEnv } from "~/client-env";
 import { RootShell } from "~/components/layout/RootShell";
+import "~/i18n"; // Initialize i18n before any component renders
 import { authQueryOptions, type AuthInfo } from "~/lib/auth/queries";
 import appCss from "~/styles.css?url";
 

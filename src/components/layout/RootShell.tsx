@@ -1,5 +1,4 @@
 import { Toaster } from "~/components/ui/sonner";
-import "~/i18n";
 
 interface RootShellProps {
   children: React.ReactNode;
