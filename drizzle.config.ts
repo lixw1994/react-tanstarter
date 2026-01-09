@@ -1,18 +1,20 @@
 /**
  * Drizzle ORM Configuration
  *
- * Uses Vite's loadEnv for environment variable loading:
- *   - development: .env → .env.local (local SQLite via wrangler)
- *   - production:  .env → .env.production → .env.production.local (remote D1 via HTTP)
+ * Environment variable loading order (later files override earlier):
+ *   - .env                  (base defaults)
+ *   - .env.local            (local overrides)
+ *   - .env.[mode]           (mode-specific)
+ *   - .env.[mode].local     (mode-specific local overrides)
  *
  * Usage:
  *   pnpm db:push             # Push to local D1 (development)
  *   pnpm db:push:production  # Push to remote D1 (production)
  */
+import dotenv from "dotenv";
 import { defineConfig } from "drizzle-kit";
 import fs from "fs";
 import path from "path";
-import { loadEnv } from "vite";
 
 function getLocalD1DB() {
   try {
@@ -31,13 +33,28 @@ function getLocalD1DB() {
   }
 }
 
-// Load env using Vite's loadEnv (respects .env, .env.local, .env.[mode], .env.[mode].local)
+// Load env files in order, later files override earlier
 const mode = process.env.NODE_ENV || "development";
-const env = loadEnv(mode, process.cwd(), "");
+const envFiles = [".env", ".env.local", `.env.${mode}`, `.env.${mode}.local`];
+
+const env: Record<string, string> = {};
+for (const file of envFiles) {
+  const filePath = path.join(process.cwd(), file);
+  if (fs.existsSync(filePath)) {
+    const parsed = dotenv.parse(fs.readFileSync(filePath));
+    // Merge: later files override earlier (skip empty values)
+    for (const [key, value] of Object.entries(parsed)) {
+      if (value !== "" || !(key in env)) {
+        env[key] = value;
+      }
+    }
+  }
+}
+
 const isLocal = mode === "development";
 
 console.log(
-  `[drizzle] mode=${mode}, db=${isLocal ? getLocalD1DB() : env.CLOUDFLARE_DATABASE_ID}`,
+  `[drizzle] mode=${mode}, db=${isLocal ? getLocalD1DB() : env.SCRIPT_CLOUDFLARE_DATABASE_ID}`,
 );
 
 export default defineConfig({
@@ -54,9 +71,9 @@ export default defineConfig({
     : {
         driver: "d1-http",
         dbCredentials: {
-          accountId: env.CLOUDFLARE_ACCOUNT_ID!,
-          databaseId: env.CLOUDFLARE_DATABASE_ID!,
-          token: env.CLOUDFLARE_D1_TOKEN!,
+          accountId: env.SCRIPT_CLOUDFLARE_ACCOUNT_ID!,
+          databaseId: env.SCRIPT_CLOUDFLARE_DATABASE_ID!,
+          token: env.SCRIPT_CLOUDFLARE_D1_TOKEN!,
         },
       }),
 });
