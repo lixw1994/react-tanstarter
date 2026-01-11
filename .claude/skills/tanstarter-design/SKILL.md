@@ -131,13 +131,32 @@ export const Route = createFileRoute("/(app)/my-page")({
 
 ### Prohibited
 
-| Prohibited       | Reason                 |
-| ---------------- | ---------------------- |
-| New UI libraries | Already have shadcn/ui |
-| CSS-in-JS        | Already have Tailwind  |
-| Hardcoded colors | Breaks theming         |
-| Hardcoded text   | Breaks i18n            |
-| Desktop First    | Violates principle     |
+| Prohibited            | Reason                 |
+| --------------------- | ---------------------- |
+| New UI libraries      | Already have shadcn/ui |
+| CSS-in-JS             | Already have Tailwind  |
+| Hardcoded colors      | Breaks theming         |
+| Hardcoded text        | Breaks i18n            |
+| Desktop First         | Violates principle     |
+| `h-screen`            | Use `h-dvh` instead    |
+| Arbitrary `z-[9999]`  | Use fixed z-index scale |
+| Gradients             | Unless explicitly requested |
+| Custom letter-spacing | Unless explicitly requested |
+| Animation by default  | Unless explicitly requested |
+
+### Recharts Color Variables
+
+This project uses Tailwind v4 with `oklch()` color format. Chart colors are CSS variables:
+
+```tsx
+// WRONG - hsl() cannot parse oklch values
+fill: "hsl(var(--chart-1))"
+
+// CORRECT - Use CSS variable directly
+fill: "var(--chart-1)"
+```
+
+Available chart colors: `--chart-1` through `--chart-5` (defined in `src/styles.css`)
 
 ### Quality Standards
 
@@ -146,8 +165,30 @@ export const Route = createFileRoute("/(app)/my-page")({
 - Forms have `<Label htmlFor>`
 - Components accept `className` prop
 - Use `cn()` to merge classNames
+- Use `text-balance` for headings, `text-pretty` for body
+- Use `tabular-nums` for numeric data
+- Use `size-x` for square elements (not `w-x h-x`)
+- Respect `safe-area-inset` for fixed elements
+- Use AlertDialog for destructive actions
+- Show errors next to where the action happens
+- Empty states must have one clear next action
+
+### Animation Rules
+
+- NEVER add animation unless explicitly requested
+- Animate only compositor props (`transform`, `opacity`)
+- NEVER animate layout props (`width`, `height`, `margin`, `padding`)
+- NEVER exceed 200ms for interaction feedback
+- MUST respect `prefers-reduced-motion`
+- Use `ease-out` on entrance animations
 
 ---
+
+## Reference Documents
+
+- **Aesthetics** → [references/aesthetics.md](references/aesthetics.md)
+- **Vercel Geist** → [references/vercel-geist.md](references/vercel-geist.md)
+- **UI Skills** → [references/ui-skills.md](references/ui-skills.md)
 
 ## Reference Code
 
