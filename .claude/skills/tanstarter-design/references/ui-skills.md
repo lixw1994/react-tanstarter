@@ -5,85 +5,114 @@
 
 ## Stack
 
-| Rule | Constraint |
-| ---- | ---------- |
-| MUST | Use Tailwind CSS defaults (spacing, radius, shadows) before custom values |
-| MUST | Use motion/react (formerly framer-motion) when JavaScript animation is required |
-| SHOULD | Use tw-animate-css for entrance and micro-animations in Tailwind CSS |
-| MUST | Use `cn` utility (clsx + tailwind-merge) for class logic |
+| Rule   | Constraint                                                                 |
+| ------ | -------------------------------------------------------------------------- |
+| MUST   | Use Tailwind CSS defaults (spacing, radius, shadows) before custom values  |
+| MUST   | Use `motion/react` (formerly framer-motion) when JavaScript animation is required |
+| SHOULD | Use `tw-animate-css` for entrance and micro-animations in Tailwind CSS     |
+| MUST   | Use `cn` utility (`clsx` + `tailwind-merge`) for class logic               |
 
 ## Components
 
-| Rule | Constraint |
-| ---- | ---------- |
-| MUST | Use accessible component primitives for anything with keyboard or focus behavior (Base UI, React Aria, Radix) |
-| MUST | Use the project's existing component primitives first |
-| NEVER | Mix primitive systems within the same interaction surface |
-| SHOULD | Prefer Base UI for new primitives if compatible with the stack |
-| MUST | Add an `aria-label` to icon-only buttons |
-| NEVER | Rebuild keyboard or focus behavior by hand unless explicitly requested |
+| Rule   | Constraint                                                                           |
+| ------ | ------------------------------------------------------------------------------------ |
+| MUST   | Use accessible component primitives for keyboard/focus behavior (Base UI, React Aria, Radix) |
+| MUST   | Use the project's existing component primitives first                                |
+| NEVER  | Mix primitive systems within the same interaction surface                            |
+| SHOULD | Prefer Base UI for new primitives if compatible with the stack                       |
+| MUST   | Add an `aria-label` to icon-only buttons                                             |
+| NEVER  | Rebuild keyboard or focus behavior by hand unless explicitly requested               |
 
 ## Interaction
 
-| Rule | Constraint |
-| ---- | ---------- |
-| MUST | Use an AlertDialog for destructive or irreversible actions |
-| SHOULD | Use structural skeletons for loading states |
-| NEVER | Use `h-screen`, use `h-dvh` instead |
-| MUST | Respect `safe-area-inset` for fixed elements |
-| MUST | Show errors next to where the action happens |
-| NEVER | Block paste in input or textarea elements |
+| Rule   | Constraint                                              |
+| ------ | ------------------------------------------------------- |
+| MUST   | Use an AlertDialog for destructive or irreversible actions |
+| SHOULD | Use structural skeletons for loading states             |
+| NEVER  | Use `h-screen`, use `h-dvh` instead                     |
+| MUST   | Respect `safe-area-inset` for fixed elements            |
+| MUST   | Show errors next to where the action happens            |
+| NEVER  | Block paste in `input` or `textarea` elements           |
 
 ## Animation
 
-| Rule | Constraint |
-| ---- | ---------- |
-| NEVER | Add animation unless it is explicitly requested |
-| MUST | Animate only compositor props (`transform`, `opacity`) |
-| NEVER | Animate layout properties (`width`, `height`, `top`, `left`, `margin`, `padding`) |
-| SHOULD | Avoid animating paint properties (`background`, `color`) except for small, local UI (text, icons) |
-| SHOULD | Use `ease-out` on entrance |
-| NEVER | Exceed 200ms for interaction feedback |
-| MUST | Pause looping animations when off-screen |
-| MUST | Respect `prefers-reduced-motion` |
-| NEVER | Introduce custom easing curves unless explicitly requested |
-| SHOULD | Avoid animating large images or full-screen surfaces |
+| Rule   | Constraint                                                                    |
+| ------ | ----------------------------------------------------------------------------- |
+| NEVER  | Add animation unless it is explicitly requested                               |
+| MUST   | Animate only compositor props (`transform`, `opacity`)                        |
+| NEVER  | Animate layout properties (`width`, `height`, `top`, `left`, `margin`, `padding`) |
+| SHOULD | Avoid animating paint properties (`background`, `color`) except for small, local UI |
+| SHOULD | Use `ease-out` on entrance                                                    |
+| NEVER  | Exceed `200ms` for interaction feedback                                       |
+| MUST   | Pause looping animations when off-screen                                      |
+| MUST   | Respect `prefers-reduced-motion`                                              |
+| NEVER  | Introduce custom easing curves unless explicitly requested                    |
+| SHOULD | Avoid animating large images or full-screen surfaces                          |
+| NEVER  | Use `transition: all` - explicitly list properties                            |
+| MUST   | Make animations interruptible by user input                                   |
 
 ## Typography
 
-| Rule | Constraint |
-| ---- | ---------- |
-| MUST | Use `text-balance` for headings and `text-pretty` for body/paragraphs |
-| MUST | Use `tabular-nums` for data |
-| SHOULD | Use `truncate` or `line-clamp` for dense UI |
-| NEVER | Modify `letter-spacing` (`tracking-`) unless explicitly requested |
+| Rule   | Constraint                                                    |
+| ------ | ------------------------------------------------------------- |
+| MUST   | Use `text-balance` for headings and `text-pretty` for body/paragraphs |
+| MUST   | Use `tabular-nums` for data                                   |
+| SHOULD | Use `truncate` or `line-clamp` for dense UI                   |
+| NEVER  | Modify `letter-spacing` (`tracking-`) unless explicitly requested |
+| SHOULD | Use curly quotes `" "` not straight `" "`                     |
+| SHOULD | Use ellipsis character `…` not three dots `...`               |
 
 ## Layout
 
-| Rule | Constraint |
-| ---- | ---------- |
-| MUST | Use a fixed z-index scale (no arbitrary `z-x`) |
+| Rule   | Constraint                                                |
+| ------ | --------------------------------------------------------- |
+| MUST   | Use a fixed z-index scale (no arbitrary `z-x`)            |
 | SHOULD | Use `size-x` for square elements instead of `w-x` + `h-x` |
+| SHOULD | Use `touch-action: manipulation` to prevent double-tap zoom |
 
 ## Performance
 
-| Rule | Constraint |
-| ---- | ---------- |
-| NEVER | Animate large `blur()` or `backdrop-filter` surfaces |
-| NEVER | Apply `will-change` outside an active animation |
-| NEVER | Use `useEffect` for anything that can be expressed as render logic |
+| Rule   | Constraint                                                          |
+| ------ | ------------------------------------------------------------------- |
+| NEVER  | Animate large `blur()` or `backdrop-filter` surfaces                |
+| NEVER  | Apply `will-change` outside an active animation                     |
+| NEVER  | Use `useEffect` for anything that can be expressed as render logic  |
+| SHOULD | Virtualize large lists (>100 items) or use `content-visibility: auto` |
+| SHOULD | Preload fonts for critical text to avoid FOIT/FOUT                  |
+| MUST   | Set explicit image dimensions to prevent CLS                        |
 
 ## Design
 
-| Rule | Constraint |
-| ---- | ---------- |
-| NEVER | Use gradients unless explicitly requested |
-| NEVER | Use purple or multicolor gradients |
-| NEVER | Use glow effects as primary affordances |
-| SHOULD | Use Tailwind CSS default shadow scale unless explicitly requested |
-| MUST | Give empty states one clear next action |
-| SHOULD | Limit accent color usage to one per view |
+| Rule   | Constraint                                                              |
+| ------ | ----------------------------------------------------------------------- |
+| NEVER  | Use gradients unless explicitly requested                               |
+| NEVER  | Use purple or multicolor gradients                                      |
+| NEVER  | Use glow effects as primary affordances                                 |
+| SHOULD | Use Tailwind CSS default shadow scale unless explicitly requested       |
+| MUST   | Give empty states one clear next action                                 |
+| SHOULD | Limit accent color usage to one per view                                |
 | SHOULD | Use existing theme or Tailwind CSS color tokens before introducing new ones |
+
+## Forms
+
+| Rule   | Constraint                                                              |
+| ------ | ----------------------------------------------------------------------- |
+| MUST   | Allow Enter to submit form (single control) or apply to last control    |
+| MUST   | In `<textarea>`, ⌘/⌃+Enter submits, Enter inserts newline               |
+| NEVER  | Pre-disable submit button - allow submission to show validation         |
+| NEVER  | Block input even if field only accepts certain characters               |
+| NEVER  | Block paste in any input field                                          |
+| MUST   | Click on `<label>` focuses associated control                           |
+| MUST   | On submit error, focus first invalid field                              |
+
+## Loading States
+
+| Rule   | Constraint                                                              |
+| ------ | ----------------------------------------------------------------------- |
+| SHOULD | Add 150-300ms delay before showing loader (avoid flash)                 |
+| SHOULD | Minimum visible time 300-500ms once loader is shown                     |
+| SHOULD | Use optimistic updates when success is likely                           |
+| MUST   | On failure: show error and rollback, or provide undo option             |
 
 ---
 
@@ -112,6 +141,13 @@
 
 // Icon buttons need aria-label
 <button aria-label="Close"><XIcon /></button>
+
+// Explicit transition properties
+<div className="transition-colors duration-150" />
+<div className="transition-transform duration-200" />
+
+// Derived state without useEffect
+const derivedValue = useMemo(() => compute(props), [props]);
 ```
 
 ### Don'ts
@@ -134,4 +170,16 @@
 
 // Don't modify letter-spacing
 <p className="tracking-wide" />  // Bad unless requested
+
+// Don't use transition-all
+<div className="transition-all" />  // Bad
+
+// Don't pre-disable submit
+<Button disabled={!isValid}>Submit</Button>  // Bad
+
+// Don't use useEffect for derived state
+useEffect(() => { setState(compute(props)) }, [props])  // Bad
+
+// Don't apply will-change permanently
+<div className="will-change-transform" />  // Bad
 ```

@@ -57,6 +57,13 @@ Space: Close = related, Far = independent
 - Asymmetry can create visual tension
 - Density variation guides the eye
 
+### Visual Details
+
+- **Optical alignment**: Adjust ±1px when perception beats geometry
+- **Layered shadows**: Mimic ambient + direct light with at least two layers
+- **Nested border-radius**: Child radius ≤ parent radius, concentrically aligned
+- **Consistent rhythm**: Same spacing for same relationships
+
 ### Micro-interactions
 
 Motion serves understanding, not decoration:
@@ -64,13 +71,6 @@ Motion serves understanding, not decoration:
 - **Instant feedback** (150ms): hover, click
 - **State transitions** (200ms): expand, toggle
 - **Spatial changes** (300ms): sidebar, modal
-
-### Details = Quality
-
-- Consistent spacing rhythm
-- Precise alignment
-- Appropriate border radius
-- Subtle shadows/borders
 
 **See** → [references/aesthetics.md](references/aesthetics.md)
 
@@ -123,7 +123,7 @@ export const Route = createFileRoute("/(app)/my-page")({
 
 **Navigation config**: Edit `src/config/nav.ts`
 
-**Existing UI components**: `src/components/ui/` (Button, Card, Input, Label, DropdownMenu, Tooltip)
+**Existing UI components**: `src/components/ui/` (Button, Card, Input, Label, DropdownMenu, Tooltip, Skeleton, AlertDialog)
 
 ---
 
@@ -131,18 +131,22 @@ export const Route = createFileRoute("/(app)/my-page")({
 
 ### Prohibited
 
-| Prohibited            | Reason                 |
-| --------------------- | ---------------------- |
-| New UI libraries      | Already have shadcn/ui |
-| CSS-in-JS             | Already have Tailwind  |
-| Hardcoded colors      | Breaks theming         |
-| Hardcoded text        | Breaks i18n            |
-| Desktop First         | Violates principle     |
-| `h-screen`            | Use `h-dvh` instead    |
-| Arbitrary `z-[9999]`  | Use fixed z-index scale |
-| Gradients             | Unless explicitly requested |
-| Custom letter-spacing | Unless explicitly requested |
-| Animation by default  | Unless explicitly requested |
+| Prohibited              | Reason                            |
+| ----------------------- | --------------------------------- |
+| New UI libraries        | Already have shadcn/ui            |
+| CSS-in-JS               | Already have Tailwind             |
+| Hardcoded colors        | Breaks theming                    |
+| Hardcoded text          | Breaks i18n                       |
+| Desktop First           | Violates principle                |
+| `h-screen`              | Use `h-dvh` instead               |
+| Arbitrary `z-[9999]`    | Use fixed z-index scale           |
+| Gradients               | Unless explicitly requested       |
+| Purple/multicolor gradients | Never use                     |
+| Glow effects            | Never as primary affordances      |
+| Custom letter-spacing   | Unless explicitly requested       |
+| Animation by default    | Unless explicitly requested       |
+| `transition: all`       | Explicitly list properties        |
+| Block paste             | Never on input/textarea           |
 
 ### Recharts Color Variables
 
@@ -160,34 +164,122 @@ Available chart colors: `--chart-1` through `--chart-5` (defined in `src/styles.
 
 ### Quality Standards
 
+**Accessibility & Touch**:
 - Touch targets ≥ 44px (`min-h-11`)
 - Icon buttons have `aria-label`
 - Forms have `<Label htmlFor>`
+- Focus indicators visible (`:focus-visible`)
+- Keyboard navigation works (WAI-ARIA patterns)
+
+**Code Quality**:
 - Components accept `className` prop
 - Use `cn()` to merge classNames
+- NEVER mix component primitive systems (Radix/React Aria) in same surface
+
+**Typography**:
 - Use `text-balance` for headings, `text-pretty` for body
 - Use `tabular-nums` for numeric data
+- Use `truncate` or `line-clamp` for dense UI
+- Use curly quotes `" "` not straight `" "`
+- Use ellipsis character `…` not three dots `...`
+
+**Layout**:
 - Use `size-x` for square elements (not `w-x h-x`)
 - Respect `safe-area-inset` for fixed elements
+- Use `touch-action: manipulation` to prevent double-tap zoom
+
+**Interaction**:
 - Use AlertDialog for destructive actions
 - Show errors next to where the action happens
 - Empty states must have one clear next action
 
+### Form Behavior Rules
+
+```tsx
+// Enter submits form (single control) or applies to last control (multi)
+// Textarea: ⌘/⌃+Enter submits, Enter inserts newline
+
+// NEVER pre-disable submit button - allow submission to show validation
+❌ <Button disabled={!isValid}>Submit</Button>
+✅ <Button type="submit">Submit</Button>  // Validate on submit
+
+// NEVER block input even if field only accepts numbers
+❌ <input onKeyDown={(e) => !/\d/.test(e.key) && e.preventDefault()} />
+✅ <input type="text" inputMode="numeric" />  // Validate, don't block
+
+// NEVER block paste
+❌ <input onPaste={(e) => e.preventDefault()} />
+
+// Click label focuses associated control
+✅ <Label htmlFor="email">Email</Label>
+   <Input id="email" />
+```
+
 ### Animation Rules
 
-- NEVER add animation unless explicitly requested
-- Animate only compositor props (`transform`, `opacity`)
-- NEVER animate layout props (`width`, `height`, `margin`, `padding`)
-- NEVER exceed 200ms for interaction feedback
-- MUST respect `prefers-reduced-motion`
-- Use `ease-out` on entrance animations
+```tsx
+// NEVER add animation unless explicitly requested
+// Animate only compositor props (transform, opacity)
+// NEVER animate layout props (width, height, margin, padding)
+// NEVER exceed 200ms for interaction feedback
+// MUST respect prefers-reduced-motion
+// Use ease-out on entrance animations
+
+// NEVER use transition: all
+❌ className="transition-all"
+✅ className="transition-colors"
+✅ className="transition-transform"
+
+// Animations must be interruptible by user input
+// Pause looping animations when off-screen
+// Avoid animating large images or full-screen surfaces
+// Avoid animating paint properties (background, color) except small UI
+```
+
+### Performance Rules
+
+```tsx
+// NEVER animate large blur() or backdrop-filter surfaces
+❌ <div className="backdrop-blur-xl animate-fade-in" />
+
+// NEVER apply will-change outside active animation
+❌ className="will-change-transform"  // Always applied
+✅ // Apply will-change only during animation via JS
+
+// NEVER use useEffect for render logic
+❌ useEffect(() => { setDerivedState(compute(props)) }, [props])
+✅ const derivedState = useMemo(() => compute(props), [props])
+
+// Virtualize large lists (>100 items)
+// Use content-visibility: auto for off-screen content
+// Preload fonts for critical text to avoid FOIT/FOUT
+// Set explicit image dimensions to prevent CLS
+```
+
+### Loading State Rules
+
+```tsx
+// Use structural skeletons that match content layout
+✅ <Skeleton className="h-8 w-48" />  // Matches heading size
+
+// Add 150-300ms delay before showing loader (avoid flash)
+const [showLoader, setShowLoader] = useState(false);
+useEffect(() => {
+  const timer = setTimeout(() => setShowLoader(true), 200);
+  return () => clearTimeout(timer);
+}, []);
+
+// Minimum visible time 300-500ms once shown (avoid flash)
+// Use optimistic updates when success is likely
+// On failure: show error and rollback, or provide undo
+```
 
 ---
 
 ## Reference Documents
 
 - **Aesthetics** → [references/aesthetics.md](references/aesthetics.md)
-- **Vercel Geist** → [references/vercel-geist.md](references/vercel-geist.md)
+- **Vercel Guidelines** → [references/vercel-geist.md](references/vercel-geist.md)
 - **UI Skills** → [references/ui-skills.md](references/ui-skills.md)
 
 ## Reference Code

@@ -1,12 +1,15 @@
-# Vercel Geist Design System Principles
+# Vercel Web Interface Guidelines
 
-> Extracted from Vercel's design philosophy and Geist design system.
+> Extracted from Vercel's design philosophy and Web Interface Guidelines.
+> Source: https://vercel.com/design/guidelines
 
 ## Core Philosophy
 
-**"Design for developers, with developers."**
+**"Interfaces succeed because of hundreds of choices."**
 
-Vercel's design prioritizes:
+Every detail matters. Success comes from the accumulation of countless small decisions made correctly.
+
+### Design Principles
 
 1. **Clarity over cleverness** - Every element serves a purpose
 2. **Speed of comprehension** - Users understand instantly
@@ -15,270 +18,307 @@ Vercel's design prioritizes:
 
 ---
 
-## Typography: Geist Font System
+## Keyboard & Focus
 
-### Font Pairing
+### Keyboard First
 
-```
-Geist Sans  → UI text, headings, body copy
-Geist Mono  → Code, technical data, timestamps
-```
+- All flows are keyboard-operable and follow WAI-ARIA Authoring Patterns
+- Every focusable element shows a visible focus ring
+- Prefer `:focus-visible` over `:focus` for cleaner mouse UX
 
-### Type Scale (Modular)
-
-| Name   | Size   | Line Height | Weight    | Use Case                    |
-| ------ | ------ | ----------- | --------- | --------------------------- |
-| xs     | 12px   | 16px        | 400       | Captions, badges, metadata  |
-| sm     | 14px   | 20px        | 400       | Secondary text, descriptions|
-| base   | 16px   | 24px        | 400       | Body text, default          |
-| lg     | 18px   | 28px        | 500       | Emphasized body             |
-| xl     | 20px   | 28px        | 600       | Section headers             |
-| 2xl    | 24px   | 32px        | 600       | Card titles                 |
-| 3xl    | 30px   | 36px        | 700       | Page titles                 |
-| 4xl    | 36px   | 40px        | 700       | Hero headings               |
-
-### Typography Principles
-
-1. **Limit to 3 sizes per view** - More creates visual noise
-2. **Weight creates hierarchy** - Not just size
-3. **Line length: 45-75 characters** - Optimal readability
-4. **Monospace for data** - Numbers, codes, IDs align better
+### Focus Management
 
 ```tsx
-// Good: Clear hierarchy with minimal variation
-<h1 className="text-3xl font-bold">Dashboard</h1>
-<p className="text-muted-foreground">Overview of your projects</p>
-<span className="font-mono text-sm">ID: proj_abc123</span>
+// Use focus traps for modals/dialogs
+// Move focus according to WAI-ARIA patterns
+// Return focus to trigger element on close
+
+// Focus ring styling
+className="focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
 ```
 
 ---
 
-## Color System
+## Touch & Click Targets
 
-### Semantic Color Architecture
+### Target Sizing
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  Foreground (text, icons)                               │
-│    ├── foreground        → Primary text                 │
-│    ├── muted-foreground  → Secondary text               │
-│    └── accent-foreground → Text on accent backgrounds   │
-├─────────────────────────────────────────────────────────┤
-│  Background (surfaces)                                  │
-│    ├── background        → Page background              │
-│    ├── card              → Elevated surfaces            │
-│    ├── muted             → Subtle backgrounds           │
-│    └── accent            → Hover states                 │
-├─────────────────────────────────────────────────────────┤
-│  Semantic (meaning)                                     │
-│    ├── primary           → Main actions                 │
-│    ├── secondary         → Alternative actions          │
-│    ├── destructive       → Danger, delete               │
-│    └── success/warning   → Status indicators            │
-├─────────────────────────────────────────────────────────┤
-│  Border                                                 │
-│    ├── border            → Default borders              │
-│    ├── input             → Form input borders           │
-│    └── ring              → Focus rings                  │
-└─────────────────────────────────────────────────────────┘
-```
+| Visual Size | Click Target | Context |
+| ----------- | ------------ | ------- |
+| < 24px      | Expand to ≥ 24px | Desktop |
+| Any         | ≥ 44px       | Mobile  |
 
-### Color Usage Rules
-
-1. **Never use raw colors** - Always semantic tokens
-2. **Foreground/background pairing** - Ensure contrast
-3. **Accent sparingly** - One accent color per view
-4. **Status colors are sacred** - Red=error, Green=success, Yellow=warning
+### Mobile Input
 
 ```tsx
-// Good: Semantic tokens
-<div className="bg-card text-card-foreground border border-border">
-  <p className="text-muted-foreground">Secondary info</p>
-  <Button variant="destructive">Delete</Button>
-</div>
+// Prevent iOS Safari auto-zoom on input focus
+<input className="text-base" />  // ≥ 16px font size
 
-// Bad: Raw colors
-<div className="bg-white text-gray-900 border border-gray-200">
+// Prevent double-tap zoom
+<div className="touch-action-manipulation" />
+// Or in CSS: touch-action: manipulation;
 ```
 
 ---
 
-## Spacing: The 4px Grid
+## Loading States
 
-### Base Unit: 4px
+### Timing Rules
 
-All spacing derives from 4px:
-
-| Token | Value | Tailwind | Use Case                        |
-| ----- | ----- | -------- | ------------------------------- |
-| 1     | 4px   | `gap-1`  | Icon-text gap, tight groups     |
-| 2     | 8px   | `gap-2`  | Related items, button padding   |
-| 3     | 12px  | `gap-3`  | List items, form fields         |
-| 4     | 16px  | `gap-4`  | Card padding, section gaps      |
-| 6     | 24px  | `gap-6`  | Major sections                  |
-| 8     | 32px  | `gap-8`  | Page sections                   |
-| 12    | 48px  | `gap-12` | Large separations               |
-| 16    | 64px  | `gap-16` | Hero sections                   |
-
-### Spacing Principles
-
-1. **Proximity = Relationship** - Close items are related
-2. **Consistent rhythm** - Same spacing for same relationships
-3. **Breathing room** - Don't crowd elements
-4. **Responsive scaling** - Tighter on mobile, looser on desktop
-
-```tsx
-// Responsive spacing pattern
-<div className="p-4 md:p-6 lg:p-8">
-  <div className="space-y-4 md:space-y-6">
-    {/* Content */}
-  </div>
-</div>
-```
-
----
-
-## Component Patterns
-
-### Cards
-
-```tsx
-// Standard card structure
-<Card className="p-4 md:p-6">
-  <CardHeader className="p-0 pb-4">
-    <CardTitle className="text-lg font-semibold">Title</CardTitle>
-    <CardDescription>Supporting text</CardDescription>
-  </CardHeader>
-  <CardContent className="p-0">
-    {/* Main content */}
-  </CardContent>
-  <CardFooter className="p-0 pt-4">
-    {/* Actions */}
-  </CardFooter>
-</Card>
-```
-
-### Buttons
-
-| Variant     | Use Case                          | Visual Weight |
-| ----------- | --------------------------------- | ------------- |
-| default     | Primary actions                   | High          |
-| secondary   | Alternative actions               | Medium        |
-| outline     | Tertiary actions                  | Low           |
-| ghost       | Inline actions, icon buttons      | Minimal       |
-| destructive | Delete, remove, dangerous actions | High (red)    |
-
-**Button sizing:**
-
-```tsx
-// Touch-friendly minimum
-<Button className="min-h-11">  {/* 44px touch target */}
-```
-
-### Forms
-
-```tsx
-// Consistent form pattern
-<div className="space-y-4">
-  <div className="space-y-2">
-    <Label htmlFor="email">Email</Label>
-    <Input id="email" type="email" placeholder="you@example.com" />
-    <p className="text-sm text-muted-foreground">
-      We'll never share your email.
-    </p>
-  </div>
-</div>
-```
-
----
-
-## Motion & Animation
-
-### Timing Functions
-
-| Duration | Use Case                    | Easing              |
-| -------- | --------------------------- | ------------------- |
-| 100ms    | Micro-interactions (hover)  | ease-out            |
-| 150ms    | State changes (toggle)      | ease-out            |
-| 200ms    | Reveals (dropdown)          | ease-out            |
-| 300ms    | Layout shifts (sidebar)     | ease-in-out         |
-| 500ms    | Page transitions            | ease-in-out         |
-
-### Animation Principles
-
-1. **Purpose over decoration** - Animation should inform, not distract
-2. **Respect reduced motion** - Honor `prefers-reduced-motion`
-3. **Exit faster than enter** - Closing feels snappier
-4. **Stagger thoughtfully** - Lists animate in sequence
-
-```tsx
-// Respect reduced motion
-<div className="motion-safe:animate-in motion-safe:fade-in">
-```
-
----
-
-## Layout Patterns
-
-### Container Widths
-
-| Type       | Max Width | Use Case                    |
-| ---------- | --------- | --------------------------- |
-| Prose      | 65ch      | Long-form text              |
-| Content    | 768px     | Forms, settings             |
-| Wide       | 1024px    | Dashboards, lists           |
-| Full       | 1280px    | Complex layouts             |
-| Fluid      | 100%      | Edge-to-edge                |
-
-### Grid System
-
-```tsx
-// Responsive grid
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-```
-
-### Sidebar Layout
-
-```tsx
-// App shell pattern
-<div className="flex min-h-screen">
-  <aside className="w-64 shrink-0 border-r hidden md:block">
-    {/* Sidebar */}
-  </aside>
-  <main className="flex-1 overflow-auto">
-    {/* Content */}
-  </main>
-</div>
-```
-
----
-
-## Dark Mode Excellence
-
-### Principles
-
-1. **Not just inverted** - Dark mode is a separate design
-2. **Reduce contrast slightly** - Pure white (#fff) is harsh
-3. **Elevate with lightness** - Higher surfaces are lighter
-4. **Shadows become borders** - Shadows don't work in dark
+| Phase | Duration | Purpose |
+| ----- | -------- | ------- |
+| Delay before showing | 150-300ms | Avoid flash for fast operations |
+| Minimum visible time | 300-500ms | Avoid jarring flash once shown |
 
 ### Implementation
 
 ```tsx
-// Elevation in dark mode
-<Card className="bg-card">           {/* Base level */}
-<Card className="bg-card/80">        {/* Elevated */}
-<Popover className="bg-popover">     {/* Floating */}
+// Show loading indicator while preserving original label
+<Button disabled={isLoading}>
+  {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+  {label}  {/* Keep original label visible */}
+</Button>
+
+// Optimistic updates for high-success operations
+// On failure: show error and rollback, or provide undo
 ```
 
 ---
 
-## Accessibility Checklist
+## Animation
 
-- [ ] Color contrast ≥ 4.5:1 for text
-- [ ] Touch targets ≥ 44×44px
+### Core Principles
+
+1. **Only animate when it clarifies cause & effect** or adds deliberate delight
+2. **Honor `prefers-reduced-motion`** - provide reduced-motion variants
+3. **Animations must be interruptible** by user input
+4. **Input-driven, not auto-play** - respond to user actions
+
+### Implementation Priority
+
+```
+1. CSS transitions/animations (preferred)
+2. Web Animations API
+3. JavaScript libraries (last resort)
+```
+
+### GPU-Friendly Animation
+
+```tsx
+// GOOD: Compositor properties only
+className="transition-transform transition-opacity"
+
+// BAD: Triggers layout/paint
+className="transition-all"  // Never use
+className="animate-[width_200ms]"  // Layout property
+className="animate-[background_200ms]"  // Paint property (except small UI)
+```
+
+### Timing
+
+| Duration | Use Case | Easing |
+| -------- | -------- | ------ |
+| 100ms | Micro-interactions (hover) | ease-out |
+| 150ms | State changes (toggle) | ease-out |
+| 200ms | Reveals (dropdown) | ease-out |
+| 300ms | Layout shifts (sidebar) | ease-in-out |
+
+---
+
+## Layout & Alignment
+
+### Optical Alignment
+
+**"Adjust ±1px when perception beats geometry."**
+
+Sometimes mathematically perfect alignment looks wrong. Trust your eyes and adjust by 1-2px when needed.
+
+### Deliberate Alignment
+
+Every element should intentionally align to:
+- Grid lines
+- Baselines
+- Edges
+- Optical centers
+
+### Responsive Testing
+
+- Test on mobile, laptop, and ultrawide
+- Scale ultrawide to 50% to simulate
+- Use safe-area variables for notches/insets
+- Prefer flex/grid/intrinsic layouts over JS measurement
+
+---
+
+## Content & Typography
+
+### Text Hierarchy
+
+```tsx
+// Headings
+<h1 className="text-balance">Balanced heading text</h1>
+
+// Body text
+<p className="text-pretty">Pretty paragraph text with good line breaks</p>
+
+// Data
+<span className="tabular-nums font-mono">1,234.56</span>
+```
+
+### Typography Details
+
+| Element | Rule |
+| ------- | ---- |
+| Quotes | Use curly `" "` not straight `" "` |
+| Ellipsis | Use `…` not `...` |
+| Numbers | Use `tabular-nums` for alignment |
+| Line length | 45-75 characters optimal |
+
+### Help Text
+
+- Prefer inline explanations over tooltips
+- Tooltips are a last resort, not first choice
+
+---
+
+## Forms
+
+### Input Behavior
+
+```tsx
+// Enter submits (single control) or applies to last control (multi)
+// Textarea: ⌘/⌃+Enter submits, Enter inserts newline
+
+// Click label focuses control
+<Label htmlFor="email">Email</Label>
+<Input id="email" />
+```
+
+### Validation Rules
+
+| Rule | Implementation |
+| ---- | -------------- |
+| Don't block input | Allow any input, validate after |
+| Don't pre-disable submit | Allow submission to show validation |
+| Error placement | Show errors next to field |
+| Error focus | Focus first invalid field on submit |
+
+```tsx
+// BAD: Blocking input
+<input onKeyDown={(e) => !/\d/.test(e.key) && e.preventDefault()} />
+
+// GOOD: Allow input, validate
+<input type="text" inputMode="numeric" />
+// Then validate on blur/submit
+```
+
+---
+
+## Visual Details
+
+### Shadows
+
+**"Mimic ambient + direct light with at least two layers."**
+
+```tsx
+// Layered shadow example
+className="shadow-sm"  // Use Tailwind defaults
+// Or custom: shadow-[0_1px_2px_rgba(0,0,0,0.05),0_4px_8px_rgba(0,0,0,0.1)]
+```
+
+### Borders
+
+- Combine borders and shadows for clarity
+- Semi-transparent borders improve edge definition
+- On tinted backgrounds, tint borders/shadows to match
+
+### Nested Border Radius
+
+```tsx
+// Child radius ≤ parent radius, concentrically aligned
+<div className="rounded-xl p-2">           {/* Parent: 12px */}
+  <div className="rounded-lg">             {/* Child: 8px (smaller) */}
+</div>
+
+// Formula: inner-radius = outer-radius - padding
+```
+
+### Color Consistency
+
+- On non-neutral backgrounds, tint borders/shadows/text toward same hue
+- Interactive states (`:hover`, `:active`, `:focus`) have higher contrast than rest
+
+---
+
+## Performance
+
+### Network Budget
+
+- `POST/PATCH/DELETE` operations complete in < 500ms
+- Show loading state if exceeding budget
+
+### Optimization Checklist
+
+```tsx
+// Virtualize large lists
+<VirtualList items={items} />  // For >100 items
+// Or use content-visibility: auto
+
+// Preload critical fonts
+<link rel="preload" href="/fonts/geist.woff2" as="font" crossOrigin="" />
+
+// Prevent CLS with explicit dimensions
+<img width={400} height={300} />
+
+// Preconnect to CDN domains
+<link rel="preconnect" href="https://cdn.example.com" />
+```
+
+### Device Testing
+
+- Test iOS Low Power Mode
+- Test macOS Safari
+- Test with network throttling
+
+---
+
+## Accessibility
+
+### Semantic HTML First
+
+```tsx
+// GOOD: Native elements
+<button>Click me</button>
+<a href="/page">Link</a>
+<label htmlFor="input">Label</label>
+
+// LAST RESORT: ARIA
+<div role="button" tabIndex={0} aria-label="Click me">
+```
+
+### Checklist
+
+- [ ] Color contrast ≥ 4.5:1 for text (prefer APCA over WCAG 2)
+- [ ] Touch targets ≥ 44×44px on mobile
 - [ ] Focus indicators visible
 - [ ] Keyboard navigation works
-- [ ] Screen reader labels present
+- [ ] Screen reader labels present (`aria-label` for icon buttons)
 - [ ] Reduced motion respected
-- [ ] Error states are clear (not just color)
+- [ ] Error states clear (not just color)
+- [ ] Hierarchical headings (`<h1–h6>`)
+- [ ] "Skip to content" link available
+
+---
+
+## Vercel Copy Style
+
+### Writing Rules
+
+| Rule | Example |
+| ---- | ------- |
+| Active voice | "Deploy your app" not "Your app can be deployed" |
+| Title case for headings | "Getting Started" not "Getting started" |
+| Use `&` over `and` | "Build & Deploy" |
+| Use numerals | "8 deployments" not "eight deployments" |
+| Consistent decimals | All 0 or all 2 decimal places, never mixed |
+| Number-unit spacing | `10 MB` with non-breaking space (`10&nbsp;MB`) |

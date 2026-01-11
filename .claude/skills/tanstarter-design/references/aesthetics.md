@@ -21,6 +21,15 @@ Spacing communicates relationships. Consistent spacing = professional feel.
 | L4 Secondary     | `text-sm text-muted-foreground`                    | Descriptions, hints, timestamps |
 | L5 Label         | `text-xs`                                          | Badges, tags, metadata          |
 
+### Typography Details
+
+- Use `text-balance` for headings, `text-pretty` for body
+- Use `tabular-nums` for numeric data alignment
+- Use `truncate` or `line-clamp` for dense UI
+- Use curly quotes `" "` not straight `" "`
+- Use ellipsis `…` not three dots `...`
+- Line length: 45-75 characters (`max-w-prose`)
+
 ## Color Hierarchy
 
 ```
@@ -30,6 +39,51 @@ Text:   text-foreground → text-muted-foreground
 Background: bg-primary → bg-secondary → bg-muted → bg-background
 Border: border-border (default) → border-input (inputs)
 ```
+
+### Color Consistency
+
+- On non-neutral backgrounds, tint borders/shadows/text toward same hue
+- Interactive states (`:hover`, `:active`, `:focus`) have higher contrast than rest
+- Limit accent color to one per view
+
+## Visual Details
+
+### Optical Alignment
+
+**"Adjust ±1px when perception beats geometry."**
+
+Sometimes mathematically perfect alignment looks wrong. Trust your eyes.
+
+### Layered Shadows
+
+**"Mimic ambient + direct light with at least two layers."**
+
+```tsx
+// Use Tailwind defaults
+className="shadow-sm"
+className="shadow-md"
+
+// Or layer manually for depth
+// Layer 1: Ambient (soft, spread)
+// Layer 2: Direct (sharp, offset)
+```
+
+### Nested Border Radius
+
+Child radius ≤ parent radius, concentrically aligned.
+
+```tsx
+// Formula: inner-radius = outer-radius - padding
+<div className="rounded-xl p-2">     {/* 12px radius */}
+  <div className="rounded-lg">       {/* 8px radius (smaller) */}
+</div>
+```
+
+### Border Clarity
+
+- Combine borders and shadows for definition
+- Semi-transparent borders improve edge clarity
+- In dark mode, use borders instead of shadows
 
 ## Interactive States
 
@@ -46,9 +100,13 @@ Border: border-border (default) → border-input (inputs)
 **Transitions**:
 
 ```tsx
-transition-colors duration-150     // Color changes
-transition-all duration-200        // Multiple properties (use sparingly)
-transition-transform duration-150  // Scale/translate
+// GOOD: Explicit properties
+transition-colors duration-150
+transition-transform duration-200
+transition-opacity duration-150
+
+// BAD: Never use
+transition-all  // Animates everything, performance issue
 ```
 
 ## Creative Freedom
@@ -60,13 +118,14 @@ Within constraints, these areas allow creativity:
 - Use meaningful illustrations/icons
 - Copy can have personality (but stay professional)
 - Layout can break the usual grid
-- Guide users to next action
+- **MUST have one clear next action**
 
 ### Loading States
 
 - Skeleton shapes hint at content structure
-- Subtle brand-colored animations
-- Progress feedback for long operations
+- Add 150-300ms delay before showing (avoid flash)
+- Minimum 300-500ms visible once shown
+- Use optimistic updates when success is likely
 
 ### Data Visualization
 
@@ -79,6 +138,7 @@ Within constraints, these areas allow creativity:
 - Entry animations add fluidity
 - `animate-in fade-in slide-in-from-bottom-4`
 - Never block user interaction
+- Must be interruptible
 
 ## Dark Mode Notes
 
@@ -96,7 +156,9 @@ Test in actual dark environment, not just theme toggle.
 
 - [ ] **Hierarchy**: Does user know where to look first?
 - [ ] **Spacing**: Consistent rhythm? Nothing "looks off"?
+- [ ] **Alignment**: Optically aligned? ±1px adjustments made?
 - [ ] **Feedback**: hover/focus/loading states complete?
 - [ ] **Dark mode**: Looks good in both modes?
-- [ ] **Mobile**: Touch targets large enough? Layout sensible?
-- [ ] **Details**: Alignment precise? Border radius consistent?
+- [ ] **Mobile**: Touch targets ≥ 44px? Layout sensible?
+- [ ] **Typography**: `text-balance`/`text-pretty`/`tabular-nums` applied?
+- [ ] **Details**: Border radius nested correctly? Shadows layered?
