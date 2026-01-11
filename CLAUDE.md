@@ -78,19 +78,24 @@ wrangler.toml         # Cloudflare Workers config, [vars] section synced with .e
 | `*_CLIENT_ID/SECRET` | Server | OAuth provider credentials |
 | `CLOUDFLARE_*` | Local only | For `db:push:production` command |
 
-## Skills
+## Skills (MANDATORY)
+
+**IMPORTANT: The following workflow MUST be followed for all development tasks:**
+
+1. **Before Development** - Run `/tanstarter-design` for frontend design guidance
+2. **After Development** - Run `/confidence-check` to verify implementation quality
 
 Project-specific skills in `.claude/skills/`:
 
 ### tanstarter-design
-Frontend design guidance. Use when creating pages/components. Key points:
+Frontend design guidance. **MUST use before creating any pages/components.** Key points:
 - **Mobile First**: `p-4 md:p-6 lg:p-8` (small to large)
 - **Semantic tokens**: `bg-background`, `text-foreground` (not hardcoded colors)
 - **i18n required**: `{t("key")}` (not hardcoded text)
 - **New pages**: Use `PageContainer` component, add nav in `src/config/nav.ts`
 
 ### confidence-check
-Pre-implementation assessment. Use before complex tasks to verify:
+Pre-implementation assessment. **MUST use after completing development tasks** to verify:
 - No duplicate implementations exist
 - Architecture compliance (use existing stack)
 - Official docs reviewed
